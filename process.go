@@ -45,6 +45,10 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 
 	for _, filePath := range fileList {
 		oneFileResult := siegfriedIdent(s, filePath)
+		if oneFileResult == "err" {
+			continue
+		}
+
 		onefilehash := hex.EncodeToString(Hashit(filePath, hashDigest))
 		oneFile := oneFileResult + ",\"" + onefilehash + "\","
 		if nsrlEnabled {
