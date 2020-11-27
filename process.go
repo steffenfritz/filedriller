@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/gomodule/redigo/redis"
 	"github.com/richardlehane/siegfried"
 )
 
@@ -28,13 +29,8 @@ func CreateFileList(rootDir string) []string {
 	return fileList
 }
 
-// IdentifyFiles creates metadata with siegfried and some hashing
-func IdentifyFiles(fileList []string, hashDigest string, redisconf RedisConf) []string {
-	var redisenabled bool
-
-	if len(*redisconf.Server) != 0 {
-		redisenabled = true
-	}
+// IdentifyFiles creates metadata with siegfried and hashsum
+func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn redis.Conn) []string {
 
 	var resultList []string
 	s, err := siegfried.Load("pronom.sig")
@@ -42,16 +38,29 @@ func IdentifyFiles(fileList []string, hashDigest string, redisconf RedisConf) []
 		log.Fatal(err)
 	}
 
+	var calcNSRL bool
+	if hashDigest != "sha1" {
+		calcNSRL = true
+	}
+
 	for _, filePath := range fileList {
 		oneFileResult := siegfriedIdent(s, filePath)
-		onefilehash := Hashit(filePath, hashDigest)
-		oneFile := oneFileResult + "," + hex.EncodeToString(onefilehash)
+		onefilehash := hex.EncodeToString(Hashit(filePath, hashDigest))
+		oneFile := oneFileResult + ",\"" + onefilehash + "\","
+		if nsrlEnabled {
+			var nsrlHash string
+			if calcNSRL {
+				nsrlHash = hex.EncodeToString(Hashit(filePath, "sha1"))
+			} else {
+				nsrlHash = onefilehash
+			}
 
-		if redisenabled {
-			// ToDo: send to redis server
-		} else {
-			resultList = append(resultList, oneFile)
+			inNSRL := RedisGet(conn, nsrlHash)
+			oneFile = oneFile + inNSRL
+
 		}
+
+		resultList = append(resultList, oneFile)
 	}
 
 	return resultList
