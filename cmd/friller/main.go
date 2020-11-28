@@ -23,8 +23,10 @@ func main() {
 	log.Println("info: friller started")
 	if *sFile {
 
-		// ToDo: Download file
-		return
+		err := filedriller.DownloadPronom()
+		if err != nil {
+			log.Println(err)
+		}
 	}
 	if len(*rootDir) == 0 {
 		log.Println("error: -in is a mandatory flag")

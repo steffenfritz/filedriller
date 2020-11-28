@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+        "strings"
 
 	"github.com/gomodule/redigo/redis"
 	"github.com/richardlehane/siegfried"
@@ -59,7 +60,7 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 				nsrlHash = onefilehash
 			}
 
-			inNSRL := RedisGet(conn, nsrlHash)
+			inNSRL := RedisGet(conn, strings.ToUpper(nsrlHash))
 			oneFile = oneFile + inNSRL
 
 		}
