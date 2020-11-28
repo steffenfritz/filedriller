@@ -30,6 +30,23 @@ For issues see the issue tab.
 
         go get codeberg.org/steffenfritz/filedriller/cmd/friller
 
+## Usage
+0. Fetch the pronom.sig file
+
+        friller -download
+
+1. Without Redis / NSRL
+
+        friller -in SOMEDIRECTORY
+
+2. With Redis / NSRL
+
+        friller -in SOMEDIRECTORY -redisserv localhost
+
+3. With alternate output file
+
+        friller -in SOMEDIRECTORY -output foo.csv
+
 ## Output
 
 The output is written as a CSV file. Schema of the file:
