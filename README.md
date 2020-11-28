@@ -28,7 +28,7 @@ For issues see the issue tab.
 
 2. From source
 
-    go get codeberg.org/steffenfritz/filedriller/cmd/friller
+        go get codeberg.org/steffenfritz/filedriller/cmd/friller
 
 ## Output
 
