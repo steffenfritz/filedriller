@@ -49,7 +49,7 @@ For issues see the issue tab.
 
 ## Output
 
-The output is written ito a CSV file. Schema of the file:
+The output is written to a CSV file. Schema of the file:
 
     Filename, SizeInByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, HashSum, UUID, inNSRL
 
