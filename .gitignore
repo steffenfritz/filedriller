@@ -11,6 +11,7 @@
 /cmd/friller/friller
 /cmd/friller/info.txt
 .idea/
+cmd/friller/pronom.sig
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out

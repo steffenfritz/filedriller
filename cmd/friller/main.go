@@ -27,6 +27,9 @@ func main() {
 		if err != nil {
 			log.Println(err)
 		}
+		log.Println("info: Downloaded pronom.sig file")
+		log.Println("info: friller ended")
+		return
 	}
 	if len(*rootDir) == 0 {
 		log.Println("error: -in is a mandatory flag")
