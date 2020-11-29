@@ -23,7 +23,8 @@ func siegfriedIdent(s *siegfried.Siegfried, inFile string) string {
 		}
 		ids, err := s.Identify(f, "", "")
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
+			return "err"
 		}
 		for _, id := range ids {
 			values := id.Values()
