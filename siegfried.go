@@ -31,7 +31,7 @@ func siegfriedIdent(s *siegfried.Siegfried, inFile string) string {
 			for _, value := range values {
 				oneFile += "\"" + value + "\"" + ","
 			}
-			oneFile = "\"" + filepath.Base(inFile) + "\",\"" + strconv.Itoa(int(fi.Size())) + "\"," + oneFile[:len(oneFile)-1] // remove last comma
+			oneFile = "\"" + inFile + "\",\"" + strconv.Itoa(int(fi.Size())) + "\"," + oneFile[:len(oneFile)-1] // remove last comma
 		}
 	}
 
