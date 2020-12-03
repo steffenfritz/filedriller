@@ -21,6 +21,12 @@ func main() {
 	flag.Parse()
 
 	log.Println("info: friller started")
+
+	if _, err := os.Stat("pronom.sig"); os.IsNotExist(err) {
+		log.Println("warning: No pronom.sig file found. Trying to download it.")
+		*sFile = true
+	}
+
 	if *sFile {
 
 		err := filedriller.DownloadPronom()
@@ -28,6 +34,7 @@ func main() {
 			log.Println(err)
 		}
 		log.Println("info: Downloaded pronom.sig file")
+		log.Println("info: Please start friller again.")
 		log.Println("info: friller ended")
 		return
 	}
