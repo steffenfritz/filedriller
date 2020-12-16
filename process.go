@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-        "strings"
+	"strings"
 
 	"github.com/gomodule/redigo/redis"
 	"github.com/richardlehane/siegfried"
@@ -51,7 +51,7 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 		}
 
 		onefilehash := hex.EncodeToString(Hashit(filePath, hashDigest))
-		oneFile := oneFileResult + ",\"" + onefilehash + "\","
+		oneFile := oneFileResult + ",\"" + onefilehash + "\"," + CreateUUID() + "\","
 		if nsrlEnabled {
 			var nsrlHash string
 			if calcNSRL {
