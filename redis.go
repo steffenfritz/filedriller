@@ -19,7 +19,7 @@ func RedisConnect(r RedisConf) redis.Conn {
 func RedisGet(conn redis.Conn, hashSum string) string {
 	inNSRL, err := redis.String(conn.Do("GET", hashSum))
 	if err == redis.ErrNil {
-		inNSRL = "False"
+		inNSRL = "FALSE"
 	}
 
 	return inNSRL

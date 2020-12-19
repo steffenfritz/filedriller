@@ -1,5 +1,8 @@
 ## filedriller
 
+[![Build status](https://ci.appveyor.com/api/projects/status/vffor64yaxd2bc3q?svg=true)](https://ci.appveyor.com/project/steffenfritz/friller)
+[![Go Report Card](https://goreportcard.com/badge/codeberg.org/steffenfritz/filedriller)](https://goreportcard.com/report/codeberg.org/steffenfritz/filedriller)
+
 filedriller walks a directory tree and inspects all regular files with [siegfried](https://www.itforarchivists.com/siegfried/). Furthermore it creates UUIDv4s, hash sums (md5, sha1, sha256, sha512 or blake2b-512) and filedriller can check if the file is in the [NSRL](https://www.nist.gov/itl/ssd/software-quality-group/national-software-reference-library-nsrl).
 
 The NSRL check expects a Redis server that serves NSRL SHA-1 hashes. You can use [my docker image](https://hub.docker.com/r/ampoffcom/nslredis)
