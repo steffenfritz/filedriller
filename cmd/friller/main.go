@@ -57,7 +57,10 @@ func main() {
 	log.Println("info: Inspected " + strconv.Itoa(len(resultList)) + " files.")
 	log.Println("info: Writing output to " + *oFile)
 
-	fd.WriteString("Filename, SizeinByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, HashSum, UUID, inNSRL\r\n")
+	_, err = fd.WriteString("Filename, SizeinByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, HashSum, UUID, inNSRL\r\n")
+	if err != nil {
+		log.Fatal(err)
+	}
 	for _, result := range resultList {
 		_, err := fd.WriteString(result + "\r\n")
 		if err != nil {

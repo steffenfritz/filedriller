@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-        "strings"
+	"strings"
 
 	"github.com/gomodule/redigo/redis"
 	"github.com/richardlehane/siegfried"
