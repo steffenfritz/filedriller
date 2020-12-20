@@ -15,10 +15,7 @@ func TestCreateFileList(t *testing.T) {
 		args args
 		want []string
 	}{
-		{"File Input List",args{rootDir: "testdata"},[]string{"testdata/1200px-GPLv3_Logo.svg.png",
-			"testdata/emptyfile", "testdata/everywhere.txt", "testdata/test dir/everywhere.txt",
-			"testdata/testDir/everywhere.txt", "testdata/testDir/inNSRL/build-classpath",
-			"testdata/test_dir/everywhere.txt", "testdata/textfile.asc", "testdata/töstdir/everywhere.txt"}},
+		{"File Input List",args{rootDir: "testdata"},[]string{"testdata/1200px-GPLv3_Logo.svg.png", "testdata/emptyfile", "testdata/everywhere.txt", "testdata/test dir/everywhere.txt", "testdata/testDir/everywhere.txt", "testdata/testDir/inNSRL/build-classpath", "testdata/test_dir/everywhere.txt", "testdata/textfile.asc", "testdata/töstdir/everywhere.txt"}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
