@@ -57,3 +57,4 @@ func TestIdentifyFiles(t *testing.T) {
 		})
 	}
 }
+

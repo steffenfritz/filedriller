@@ -55,6 +55,12 @@ func main() {
 		conn = filedriller.RedisConnect(r)
 	}
 
+	fileList := filedriller.CreateFileList(*rootDir)
+	log.Println("info: Created file list. Found " + strconv.Itoa(len(fileList)) + " files.")
+	log.Println("info: Started file format identification")
+	resultList := filedriller.IdentifyFiles(fileList, *hashAlg, nsrlEnabled, conn)
+	log.Println("info: Inspected " + strconv.Itoa(len(resultList)) + " files.")
+
 	log.Println("info: Creating output file")
 	fd, err := os.Create(*oFile)
 	if err != nil {
@@ -62,11 +68,6 @@ func main() {
 	}
 	defer fd.Close()
 
-	fileList := filedriller.CreateFileList(*rootDir)
-	log.Println("info: Created file list. Found " + strconv.Itoa(len(fileList)) + " files.")
-	log.Println("info: Started file format identification")
-	resultList := filedriller.IdentifyFiles(fileList, *hashAlg, nsrlEnabled, conn)
-	log.Println("info: Inspected " + strconv.Itoa(len(resultList)) + " files.")
 	log.Println("info: Writing output to " + *oFile)
 
 	_, err = fd.WriteString("Filename, SizeinByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, HashSum, UUID, inNSRL\r\n")

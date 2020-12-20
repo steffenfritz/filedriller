@@ -10,6 +10,7 @@
 *.test
 /cmd/friller/friller
 /cmd/friller/info.txt
+/cmd/friller/info.csv
 .idea/
 cmd/friller/pronom.sig
 
