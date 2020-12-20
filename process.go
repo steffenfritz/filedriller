@@ -50,7 +50,7 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 		}
 
 		onefilehash := hex.EncodeToString(Hashit(filePath, hashDigest))
-		oneFile := oneFileResult + ",\"" + onefilehash + "\"," + CreateUUID() + "\","
+		oneFile := oneFileResult + ",\"" + onefilehash + "\"" + CreateUUID() + "\","
 		if nsrlEnabled {
 			var nsrlHash string
 			if calcNSRL {
