@@ -11,7 +11,7 @@ import (
 	"github.com/richardlehane/siegfried"
 )
 
-// IdentifyFiles creates metadata with siegfried and some hashing
+// CreateFileList creates a list of file paths
 func CreateFileList(rootDir string) []string {
 	var fileList []string
 	err := filepath.Walk(rootDir, func(path string, info os.FileInfo, err error) error {

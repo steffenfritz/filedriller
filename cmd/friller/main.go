@@ -44,7 +44,7 @@ func main() {
 		return
 	}
 
-	if !strings.HasSuffix(*rootDir,"/"){
+	if !strings.HasSuffix(*rootDir, "/") {
 		*rootDir = *rootDir + "/"
 	}
 
