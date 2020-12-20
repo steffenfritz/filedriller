@@ -19,7 +19,17 @@ For issues see the issue tab.
     
     Download the file for your platform and execute it. The executables are named friller.
     
-    Optional NSRL:
+    _Note: If the build badge above is green and says passing, it is a good idea to install from source._
+    
+
+2. From source
+
+        go get codeberg.org/steffenfritz/filedriller/cmd/friller
+
+
+
+
+3. _Optional NSRL_:
 
         - docker pull ampoffcom/nslredis:032020
 
@@ -29,9 +39,10 @@ For issues see the issue tab.
 
     When you pass the -redisserv flag, friller sends a SHA-1 hash to the specified server.
 
-2. From source
 
-        go get codeberg.org/steffenfritz/filedriller/cmd/friller
+4. Download signature file
+
+       friller -download
 
 ## Usage
 0. Fetch the pronom.sig file
@@ -74,7 +85,7 @@ Usage of ./friller:
   
   -output string
   
-    	Output file (default "info.txt")
+    	Output file (default "info.csv")
   
   -redisport string
   

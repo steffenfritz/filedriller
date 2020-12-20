@@ -17,7 +17,7 @@ func main() {
 	r.Server = flag.String("redisserv", "", "Redis server address for a NSRL database")
 	r.Port = flag.String("redisport", "6379", "Redis port number for a NSRL database")
 	sFile := flag.Bool("download", false, "Download siegfried's signature file")
-	oFile := flag.String("output", "info.txt", "Output file")
+	oFile := flag.String("output", "info.csv", "Output file")
 
 	flag.Parse()
 
