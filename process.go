@@ -26,7 +26,6 @@ func CreateFileList(rootDir string) []string {
 	if err != nil {
 		log.Println(err)
 	}
-
 	return fileList
 }
 

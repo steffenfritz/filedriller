@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -41,6 +42,10 @@ func main() {
 	if len(*rootDir) == 0 {
 		log.Println("error: -in is a mandatory flag")
 		return
+	}
+
+	if !strings.HasSuffix(*rootDir,"/"){
+		*rootDir = *rootDir + "/"
 	}
 
 	var nsrlEnabled bool
