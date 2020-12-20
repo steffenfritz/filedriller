@@ -1,0 +1,64 @@
+#!/bin/bash
+#
+# Small script to build a classpath depending on the JVM used
+#
+# JPackage Project <http://www.jpackage.org/>
+#
+
+# Import java functions
+[ -r "/usr/share/java-utils/java-functions" ] \
+ &&  . "/usr/share/java-utils/java-functions" || exit 1
+
+# Prints help message
+usage() {
+cat >&2 << EOF_USAGE
+Usage: $0 <jar1> [<jar2> .. <jarn>]
+jarX: name of a jar
+      Example: jndi
+EOF_USAGE
+exit 2
+}
+
+[ "$#" -eq "0" ] && usage
+
+set_javacmd || exit 3
+
+check_java_env || exit 4
+
+set_jvm_dirs || exit 5
+
+_ALLFOUND="true"
+
+for extension in "$@" ; do
+    unset _JARS
+    extension=$(find_jar $extension)
+    if [ "$?" = 0 ] ; then
+	if [ -d "$extension" ] ; then
+	    # Brute-force approach. If we can't specify a single jar, we can as
+	    # well take everything in the directory
+	    # This may create duplicates if symlinks point back inside the
+	    # directory structure, but who cares
+	    _JARS=$(find "$extension" -follow -name "*.jar" -type f -printf %p: 2>/dev/null)
+	else
+	    _JARS=$extension:
+	fi
+	_CLASSPATH=$_CLASSPATH$_JARS
+    else
+	# Defer failure to get list of all errors in one shot
+	_ALLFOUND="false"
+    fi
+done
+
+# Cleanup trailing :
+_CLASSPATH="$(echo $_CLASSPATH | sed 's+:$++g')"
+
+# Echo classpath whether it's complete or not
+# Apps that do not care about a full classpath can redirect errors to /dev/null
+echo "$_CLASSPATH"
+
+if [ "$_ALLFOUND" = "true" ] ; then
+    exit 0
+else
+    echo "$0: error: Some specified jars were not found" >&2
+    exit 6
+fi
