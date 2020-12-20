@@ -8,7 +8,7 @@
 
 # Test binary, built with `go test -c`
 *.test
-/cmd/friller/friller
+/cmd/friller/friller*
 /cmd/friller/info.txt
 /cmd/friller/info.csv
 .idea/

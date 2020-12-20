@@ -10,6 +10,10 @@ import (
 	"strings"
 )
 
+var Version string
+var Build string
+
+
 func main() {
 	var r filedriller.RedisConf
 	rootDir := flag.String("in", "", "Root directory to work on")
@@ -18,8 +22,14 @@ func main() {
 	r.Port = flag.String("redisport", "6379", "Redis port number for a NSRL database")
 	sFile := flag.Bool("download", false, "Download siegfried's signature file")
 	oFile := flag.String("output", "info.csv", "Output file")
+	vers := flag.Bool("version", false, "Print version and build info")
 
 	flag.Parse()
+
+	if *vers {
+		log.Printf("Version: %s. Build: %s", Version, Build)
+		return
+	}
 
 	log.Println("info: friller started")
 
