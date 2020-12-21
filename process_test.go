@@ -15,12 +15,12 @@ func TestCreateFileList(t *testing.T) {
 		args args
 		want []string
 	}{
-		{"File Input List", args{rootDir: "testdata"}, []string{"testdata/1200px-GPLv3_Logo.svg.png", "testdata/emptyfile", "testdata/everywhere.txt", "testdata/testDir/everywhere.txt", "testdata/test_dir/everywhere.txt", "testdata/testdir/everywhere.txt", "testdata/testdir/inNSRL/build-classpath", "testdata/textfile.asc", "testdata/töstdir/everywhere.txt"}},
+		{"File Input List", args{rootDir: "testdata"}, []string{"testdata/1200px-GPLv3_Logo.svg.png", "testdata/emptyfile", "testdata/everywhere.txt", "testdata/test dir/everywhere.txt", "testdata/testDir/everywhere.txt", "testdata/test_dir/everywhere.txt", "testdata/testdir/everywhere.txt", "testdata/testdir/inNSRL/build-classpath", "testdata/textfile.asc", "testdata/töstdir/everywhere.txt"}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := CreateFileList(tt.args.rootDir); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("CreateFileList() = %v, want %v", len(got), len(tt.want))
+				t.Errorf("CreateFileList() = %v, want %v", got, tt.want)
 			}
 		})
 	}
