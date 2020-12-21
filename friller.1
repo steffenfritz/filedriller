@@ -1,0 +1,57 @@
+.\" Copyright (c) 2020, Steffen Fritz
+.\"
+.\" %%%LICENSE_START(GPLv2+_DOC_FULL)
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 2 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public
+.\" License along with this manual; if not, see
+.\" <http://www.gnu.org/licenses/>.
+.\" %%%LICENSE_END
+
+.TH friller 1 "Dezember 2020" "version 1.0.0"
+.SH NAME
+friller
+.SH SYNOPSIS
+.B friller [OPTION]
+.SH DESCRIPTION
+filedriller walks a directory tree and inspects all regular files using siegfried. Furthermore it creates UUIDv4s, hash sums (md5, sha1, sha256, sha512 or blake2b-512) and filedriller can check if the file is in the NSRL.
+
+.SH FLAGS
+
+.BR \-download\fR 
+    Download siegfried's signature file
+
+.BR \-hash\ HASHNAME\fR 
+    The hash algorithm to use: md5, sha1, sha256, sha512, blake2b-512 (default "sha256")
+
+.BR \-in\ DIRECTORY\fR 
+    Root directory to work on   
+ 
+.BR \-output\ FILENAME\fR
+    Output file (default "info.csv")
+
+.BR \-redisport\ PORT\fR
+    Redis port number for a NSRL database (default "6379")
+
+.BR \-redisserv\ SERVER \fR
+    Redis server address for a NSRL database
+
+.BR \-version\fR
+    Print version and build info
+
+.SH AUTHOR
+Steffen Fritz <steffen@fritz.wtf>
+
