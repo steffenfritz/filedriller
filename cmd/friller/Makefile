@@ -1,7 +1,7 @@
 ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 BINARY=friller
-VERSION=1.0.0-BETA-2
+VERSION=1.0.0-BETA-3
 BUILD=`git rev-parse --short HEAD`
 PLATFORMS=darwin linux windows
 ARCHITECTURES=amd64
@@ -16,6 +16,12 @@ build:
 build_all:
 	$(foreach GOOS, $(PLATFORMS),\
 	$(foreach GOARCH, $(ARCHITECTURES), $(shell export GOOS=$(GOOS); export GOARCH=$(GOARCH); go build $(LDFLAGS) -v -o $(BINARY)-$(GOOS))))
+	mv friller-darwin friller && tar cvfz friller_macos_$(VERSION).tar.gz friller
+	rm friller
+	mv friller-linux friller && tar cvfz friller_linux_$(VERSION).tar.gz friller
+	rm friller
+	mv friller-windows friller && tar cvfz friller_win_$(VERSION).tar.gz friller
+	rm friller
 
 
 clean:
