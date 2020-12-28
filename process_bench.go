@@ -32,10 +32,11 @@ func BenchmarkIdentifyFiles(b *testing.B) {
 		hashDigest  string
 		nsrlEnabled bool
 		conn        redis.Conn
+		entroEnabled bool
 	}
 
 	conn, _ := redis.Dial("tcp", "127.0.0.1")
-	wantString := `"testdata/töstdir/everywhere.txt","2","pronom","x-fmt/111","Plain Text File","","text/plain","text match ASCII","match on text only","3abb6677af34ac57c0ca5828fd94f9d886c26ce59a8ce60ecf6778079423dccff1d6f19cb655805d56098e6d38a1a710dee59523eed7511e5a9e4b8ccb3a4686","0000-0000-0000-0000",`
+	wantString := `"testdata/töstdir/everywhere.txt","2","pronom","x-fmt/111","Plain Text File","","text/plain","text match ASCII","match on text only","3abb6677af34ac57c0ca5828fd94f9d886c26ce59a8ce60ecf6778079423dccff1d6f19cb655805d56098e6d38a1a710dee59523eed7511e5a9e4b8ccb3a4686","0000-0000-0000-0000",,"3.5"`
 
 	tests := []struct {
 		name string
@@ -44,11 +45,13 @@ func BenchmarkIdentifyFiles(b *testing.B) {
 	}{
 		{"Identify Files", args{fileList: []string{"testdata/töstdir/everywhere.txt"},
 			hashDigest:  "sha512",
-			nsrlEnabled: false, conn: conn},
+			nsrlEnabled: false, 
+			conn: conn,
+			entroEnabled: true},
 			[]string{wantString}}}
 	for _, tt := range tests {
 		b.Run(tt.name, func(b *testing.B) {
-			got := IdentifyFiles(tt.args.fileList, tt.args.hashDigest, tt.args.nsrlEnabled, tt.args.conn)
+			got := IdentifyFiles(tt.args.fileList, tt.args.hashDigest, tt.args.nsrlEnabled, tt.args.conn, tt.args.entroEnabled)
 			gotmodified := got[0]
 			gotmodin := []string{gotmodified[:264] + ",\"0000-0000-0000-0000\","}
 			if !reflect.DeepEqual(gotmodin, tt.want) {

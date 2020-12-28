@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"strconv"
 
 	"github.com/gomodule/redigo/redis"
 	"github.com/richardlehane/siegfried"
@@ -30,7 +31,7 @@ func CreateFileList(rootDir string) []string {
 }
 
 // IdentifyFiles creates metadata with siegfried and hashsum
-func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn redis.Conn) []string {
+func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn redis.Conn, entroEnabled bool) []string {
 
 	var resultList []string
 	s, err := siegfried.Load("pronom.sig")
@@ -42,7 +43,9 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 	if hashDigest != "sha1" {
 		calcNSRL = true
 	}
-
+	
+	var entroFile float64 
+	
 	for _, filePath := range fileList {
 		oneFileResult := siegfriedIdent(s, filePath)
 		if oneFileResult == "err" {
@@ -62,6 +65,18 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 			inNSRL := RedisGet(conn, strings.ToUpper(nsrlHash))
 			oneFile = oneFile + inNSRL
 
+		}
+		
+		if entroEnabled {
+			entroFile, err = entropy(filePath)
+			if err == nil {
+				oneFile = oneFile + ",\"" + strconv.FormatFloat(entroFile,'E',-1,32) + "\""
+			} else {
+				oneFile = oneFile + ",\"" + "ERROR calculating entropy" + "\""
+			}
+		} else {
+			oneFile = oneFile + ","
+		
 		}
 
 		resultList = append(resultList, oneFile)
