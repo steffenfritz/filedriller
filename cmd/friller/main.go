@@ -69,7 +69,7 @@ func main() {
 	fileList := filedriller.CreateFileList(*rootDir)
 	log.Println("info: Created file list. Found " + strconv.Itoa(len(fileList)) + " files.")
 	log.Println("info: Started file format identification")
-	resultList := filedriller.IdentifyFiles(fileList, *hashAlg, nsrlEnabled, conn)
+	resultList := filedriller.IdentifyFiles(fileList, *hashAlg, nsrlEnabled, conn, *entro)
 	log.Println("info: Inspected " + strconv.Itoa(len(resultList)) + " files.")
 
 	log.Println("info: Creating output file")
