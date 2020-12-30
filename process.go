@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"strings"
 	"strconv"
+	"strings"
 
 	"github.com/gomodule/redigo/redis"
 	"github.com/richardlehane/siegfried"
@@ -43,9 +43,9 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 	if hashDigest != "sha1" {
 		calcNSRL = true
 	}
-	
-	var entroFile float64 
-	
+
+	var entroFile float64
+
 	for _, filePath := range fileList {
 		oneFileResult := siegfriedIdent(s, filePath)
 		if oneFileResult == "err" {
@@ -66,17 +66,17 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 			oneFile = oneFile + inNSRL
 
 		}
-		
+
 		if entroEnabled {
 			entroFile, err = entropy(filePath)
 			if err == nil {
-				oneFile = oneFile + ",\"" + strconv.FormatFloat(entroFile,'E',-1,32) + "\""
+				oneFile = oneFile + ",\"" + strconv.FormatFloat(entroFile, 'E', -1, 32) + "\""
 			} else {
 				oneFile = oneFile + ",\"" + "ERROR calculating entropy" + "\""
 			}
 		} else {
 			oneFile = oneFile + ","
-		
+
 		}
 
 		resultList = append(resultList, oneFile)

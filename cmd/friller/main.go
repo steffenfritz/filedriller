@@ -13,7 +13,6 @@ import (
 var Version string
 var Build string
 
-
 func main() {
 	var r filedriller.RedisConf
 	rootDir := flag.String("in", "", "Root directory to work on")
@@ -22,7 +21,7 @@ func main() {
 	r.Port = flag.String("redisport", "6379", "Redis port number for a NSRL database")
 	sFile := flag.Bool("download", false, "Download siegfried's signature file")
 	oFile := flag.String("output", "info.csv", "Output file")
-        entro := flag.Bool("entropy", false, "Calculate the entropy of files. Limited to file sizes up to 1GB")
+	entro := flag.Bool("entropy", false, "Calculate the entropy of files. Limited to file sizes up to 1GB")
 	vers := flag.Bool("version", false, "Print version and build info")
 
 	flag.Parse()
