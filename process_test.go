@@ -15,7 +15,7 @@ func TestCreateFileList(t *testing.T) {
 		args args
 		want []string
 	}{
-		{"File Input List", args{rootDir: "testdata"}, []string{"testdata/1200px-GPLv3_Logo.svg.png", "testdata/emptyfile", "testdata/everywhere.txt", "testdata/test dir/everywhere.txt", "testdata/testDir/everywhere.txt", "testdata/testDir/inNSRL/build-classpath", "testdata/test_dir/everywhere.txt", "testdata/textfile.asc", "testdata/töstdir/everywhere.txt"}},
+		{"File Input List", args{rootDir: "testdata"}, []string{"testdata/1200px-GPLv3_Logo.svg.png", "testdata/emptyfile", "testdata/everywhere.txt", "testdata/test dir/everywhere.txt", "testdata/testdir/everywhere.txt", "testdata/testdir/inNSRL/build-classpath", "testdata/textfile.asc", "testdata/töstdir/everywhere.txt"}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -28,10 +28,10 @@ func TestCreateFileList(t *testing.T) {
 
 func TestIdentifyFiles(t *testing.T) {
 	type args struct {
-		fileList    []string
-		hashDigest  string
-		nsrlEnabled bool
-		conn        redis.Conn
+		fileList     []string
+		hashDigest   string
+		nsrlEnabled  bool
+		conn         redis.Conn
 		entroEnabled bool
 	}
 
@@ -44,9 +44,9 @@ func TestIdentifyFiles(t *testing.T) {
 		want []string
 	}{
 		{"Identify Files", args{fileList: []string{"testdata/töstdir/everywhere.txt"},
-			hashDigest:  "sha512",
-			nsrlEnabled: false, 
-			conn: conn,
+			hashDigest:   "sha512",
+			nsrlEnabled:  false,
+			conn:         conn,
 			entroEnabled: true},
 			[]string{wantString}}}
 	for _, tt := range tests {
