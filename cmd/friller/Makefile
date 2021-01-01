@@ -1,7 +1,7 @@
 ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 BINARY=friller
-VERSION=1.0.0-BETA-4
+VERSION=1.0.0-BETA-5
 BUILD=`git rev-parse --short HEAD`
 PLATFORMS=darwin linux windows
 ARCHITECTURES=amd64
