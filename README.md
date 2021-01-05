@@ -15,7 +15,7 @@ For issues see the issue tab.
 
 ## Installation
 
-1 a. Binary release
+1a. Binary release
     
     Download the file for your platform and execute it. The executables are named friller.
     
@@ -23,7 +23,7 @@ For issues see the issue tab.
     
 or
 
-1 b. From source
+1b. From source
 
         go get codeberg.org/steffenfritz/filedriller/cmd/friller
 
