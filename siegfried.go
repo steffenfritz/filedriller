@@ -18,7 +18,7 @@ func siegfriedIdent(s *siegfried.Siegfried, inFile string) string {
 		defer f.Close()
 		fi, _ := f.Stat()
 		if fi.Size() == 0 {
-			return inFile + ",,,,,,,"
+			return inFile + ",,,,,,,,"
 		}
 		ids, err := s.Identify(f, "", "")
 		if err != nil {
