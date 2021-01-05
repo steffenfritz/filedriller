@@ -27,6 +27,7 @@ or
 
         go get codeberg.org/steffenfritz/filedriller/cmd/friller
 
+then
 
 3. Download signature file
 
