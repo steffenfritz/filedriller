@@ -15,7 +15,7 @@ For issues see the issue tab.
 
 ## Installation
 
-1a. Binary release
+1. Binary release
     
     Download the file for your platform and execute it. The executables are named friller.
     
@@ -23,17 +23,17 @@ For issues see the issue tab.
     
 or
 
-1b. From source
+2. From source
 
         go get codeberg.org/steffenfritz/filedriller/cmd/friller
 
 
-2. Download signature file
+3. Download signature file
 
        friller -download
 
 
-3. _Optional NSRL_:
+4. _Optional NSRL_:
 
         - docker pull ampoffcom/nslredis:032020
 
