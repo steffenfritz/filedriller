@@ -1,7 +1,7 @@
 ## filedriller
 
 [![Build status](https://ci.appveyor.com/api/projects/status/vffor64yaxd2bc3q?svg=true)](https://ci.appveyor.com/project/steffenfritz/friller)
-[![Go Report Card](https://goreportcard.com/badge/codeberg.org/steffenfritz/filedriller)](https://goreportcard.com/report/codeberg.org/steffenfritz/filedriller)
+[![Go Report Card](https://goreportcard.com/badge/github.com/dla-fritz/filedriller)](https://goreportcard.com/report/github.com/dla-fritz/filedriller)
 
 filedriller walks a directory tree and identifies all regular files by type with [siegfried](https://www.itforarchivists.com/siegfried/). Furthermore it creates UUIDv4s, hash sums (md5, sha1, sha256, sha512 or blake2b-512) and filedriller can check if the file is in the [NSRL](https://www.nist.gov/itl/ssd/software-quality-group/national-software-reference-library-nsrl).
 
@@ -15,24 +15,25 @@ For issues see the issue tab.
 
 ## Installation
 
-1. Binary release
+1 a. Binary release
     
     Download the file for your platform and execute it. The executables are named friller.
     
     _Note: If the build badge above is green and says passing, it is a good idea to install from source._
     
+or
 
-2. From source
+1 b. From source
 
         go get codeberg.org/steffenfritz/filedriller/cmd/friller
 
 
-3. Download signature file
+2. Download signature file
 
        friller -download
 
 
-4. _Optional NSRL_:
+3. _Optional NSRL_:
 
         - docker pull ampoffcom/nslredis:032020
 
