@@ -7,7 +7,7 @@ func TestDownloadPronom(t *testing.T) {
 		name    string
 		wantErr bool
 	}{
-		{"Download signature file", false },
+		{"Download signature file", false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

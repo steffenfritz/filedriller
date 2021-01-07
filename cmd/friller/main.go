@@ -26,7 +26,9 @@ import (
 	"strings"
 )
 
+// Version holds the version of filedriller
 var Version string
+// Build holds the sha1 fingerprint of the build
 var Build string
 
 func main() {

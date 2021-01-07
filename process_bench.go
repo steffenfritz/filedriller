@@ -6,6 +6,7 @@ import (
 	"testing"
 )
 
+// BenchmarkCreateFileList benchmarks the creation of the file list that woll be processed
 func BenchmarkCreateFileList(b *testing.B) {
 	type args struct {
 		rootDir string

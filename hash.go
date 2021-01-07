@@ -35,6 +35,7 @@ func Hashit(inFile string, hashalg string) []byte {
 
 	} else if hashalg == "blake2b-512" {
 		hasher, err = blake2b.New512(nil)
+		e(err)
 
 	} else {
 		log.Println("Hash not implemented")
