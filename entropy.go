@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	MaxFileSize = 1073741824
+	MaxFileSize     = 1073741824
 	MaxEntropyChunk = 256000
 )
 
@@ -66,4 +66,3 @@ func entropy(path string) (entropy float64, err error) {
 
 	return math.Round(entropy*100) / 100, nil
 }
-

@@ -28,10 +28,10 @@ func BenchmarkCreateFileList(b *testing.B) {
 
 func BenchmarkIdentifyFiles(b *testing.B) {
 	type args struct {
-		fileList    []string
-		hashDigest  string
-		nsrlEnabled bool
-		conn        redis.Conn
+		fileList     []string
+		hashDigest   string
+		nsrlEnabled  bool
+		conn         redis.Conn
 		entroEnabled bool
 	}
 
@@ -44,9 +44,9 @@ func BenchmarkIdentifyFiles(b *testing.B) {
 		want []string
 	}{
 		{"Identify Files", args{fileList: []string{"testdata/töstdir/everywhere.txt"},
-			hashDigest:  "sha512",
-			nsrlEnabled: false, 
-			conn: conn,
+			hashDigest:   "sha512",
+			nsrlEnabled:  false,
+			conn:         conn,
 			entroEnabled: true},
 			[]string{wantString}}}
 	for _, tt := range tests {

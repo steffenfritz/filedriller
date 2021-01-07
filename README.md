@@ -1,11 +1,11 @@
 ## filedriller
 
 [![Build status](https://ci.appveyor.com/api/projects/status/vffor64yaxd2bc3q?svg=true)](https://ci.appveyor.com/project/steffenfritz/friller)
-[![Go Report Card](https://goreportcard.com/badge/github.com/dla-fritz/filedriller)](https://goreportcard.com/report/github.com/dla-fritz/filedriller)
+[![Go Report Card](https://goreportcard.com/badge/github.com/dla-marbach/filedriller)](https://goreportcard.com/report/github.com/dla-marbach/filedriller)
 
 filedriller walks a directory tree and identifies all regular files by type with [siegfried](https://www.itforarchivists.com/siegfried/). Furthermore it creates UUIDv4s, hash sums (md5, sha1, sha256, sha512 or blake2b-512) and filedriller can check if the file is in the [NSRL](https://www.nist.gov/itl/ssd/software-quality-group/national-software-reference-library-nsrl).
 
-The NSRL check expects a Redis server that serves NSRL SHA-1 hashes. You can use [my docker image](https://hub.docker.com/r/ampoffcom/nslredis)
+The NSRL check expects a Redis server that serves NSRL SHA-1 hashes. You can use [a team member's docker image](https://hub.docker.com/r/ampoffcom/nslredis)
 
 ## Status 
 
@@ -25,7 +25,7 @@ or
 
 2. From source
 
-        go get github.com/dla-fritz/filedriller/cmd/friller
+        go get github.com/dla-marbach/filedriller/cmd/friller
 
 then
 

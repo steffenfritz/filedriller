@@ -1,4 +1,4 @@
-module github.com/dla-fritz/filedriller
+module github.com/dla-marbach/filedriller
 
 go 1.15
 

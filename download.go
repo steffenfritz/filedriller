@@ -8,7 +8,7 @@ import (
 )
 
 // Pronomurl holds the location for my copy of pronom signature file taken from Siegfried
-const Pronomurl string = "https://github.com/dla-fritz/filedriller/raw/main/third_party/pronom.sig"
+const Pronomurl string = "https://github.com/dla-marbach/filedriller/raw/main/third_party/pronom.sig"
 
 // DownloadPronom downloads a pronom signature file
 func DownloadPronom() error {

@@ -17,8 +17,8 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 package main
 
 import (
-	"github.com/dla-fritz/filedriller"
 	"flag"
+	"github.com/dla-marbach/filedriller"
 	"github.com/gomodule/redigo/redis"
 	"log"
 	"os"
