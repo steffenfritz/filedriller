@@ -39,6 +39,7 @@ func main() {
 	r.Port = flag.String("redisport", "6379", "Redis port number for a NSRL database")
 	sFile := flag.Bool("download", false, "Download siegfried's signature file")
 	oFile := flag.String("output", "info.csv", "Output file")
+        iFile := flag.String("infile", "", "Inspect single file")
 	entro := flag.Bool("entropy", false, "Calculate the entropy of files. Limited to file sizes up to 1GB")
 	vers := flag.Bool("version", false, "Print version and build info")
 
@@ -67,6 +68,14 @@ func main() {
 		log.Println("info: friller ended")
 		return
 	}
+
+	if len(*iFile) != 0 {
+	// ToDo
+                log.Println("ToDo")
+		return
+
+        }
+
 	if len(*rootDir) == 0 {
 		log.Println("error: -in is a mandatory flag")
 		return
