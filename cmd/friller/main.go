@@ -17,9 +17,9 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 package main
 
 import (
-	"flag"
 	"github.com/dla-marbach/filedriller"
 	"github.com/gomodule/redigo/redis"
+	flag "github.com/spf13/pflag"
 	"log"
 	"os"
 	"strconv"
@@ -34,15 +34,18 @@ var Build string
 
 func main() {
 	var r filedriller.RedisConf
-	rootDir := flag.String("in", "", "Root directory to work on")
-	hashAlg := flag.String("hash", "sha256", "The hash algorithm to use: md5, sha1, sha256, sha512, blake2b-512")
-	r.Server = flag.String("redisserv", "", "Redis server address for a NSRL database")
-	r.Port = flag.String("redisport", "6379", "Redis port number for a NSRL database")
-	sFile := flag.Bool("download", false, "Download siegfried's signature file")
-	oFile := flag.String("output", "info.csv", "Output file")
-	iFile := flag.String("infile", "", "Inspect single file")
-	entro := flag.Bool("entropy", false, "Calculate the entropy of files. Limited to file sizes up to 1GB")
-	vers := flag.Bool("version", false, "Print version and build info")
+
+
+	rootDir := flag.StringP("in", "i", "", "Root directory to work on")
+	hashAlg := flag.StringP("algo", "a", "sha256", "The hash algorithm to use: md5, sha1, sha256, sha512, blake2b-512")
+	r.Server = flag.StringP("redisserv", "s", "", "Redis server address for a NSRL database")
+	r.Port = flag.StringP("redisport", "p", "6379", "Redis port number for a NSRL database")
+	sFile := flag.BoolP("download", "d", false, "Download siegfried's signature file")
+	oFile := flag.StringP("output", "o", "info.csv", "Output file")
+  iFile := flag.String("file", "f", "Inspect single file")
+	entro := flag.BoolP("entropy", "e", false, "Calculate the entropy of files. Limited to file sizes up to 1GB")
+	vers := flag.BoolP("version", "v", false, "Print version and build info")
+
 
 	flag.Parse()
 
@@ -111,7 +114,7 @@ func main() {
 
 	log.Println("info: Writing output to " + *oFile)
 
-	_, err = fd.WriteString("Filename, SizeinByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, HashSum, UUID, inNSRL, Entropy\r\n")
+	_, err = fd.WriteString("Filename, SizeInByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, " + strings.ToUpper(*hashAlg) + ", UUID, inNSRL, Entropy\r\n")
 	if err != nil {
 		log.Fatal(err)
 	}

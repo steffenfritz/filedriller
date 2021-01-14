@@ -29,4 +29,4 @@ clean:
 	rm -f '${BINARY}-darwin'
 	rm -f '${BINARY}-windows'
 
-.PHONY: check clean install build_all all
+.PHONY: clean build build_all all
