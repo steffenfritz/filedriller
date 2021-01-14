@@ -111,6 +111,7 @@ func main() {
 	log.Println("info: Creating output file")
 	fd, err := os.Create(*oFile)
 	if err != nil {
+		fdr.ErrorLogger.Println(err)
 		log.Fatal(err)
 	}
 	defer fd.Close()
@@ -119,11 +120,13 @@ func main() {
 
 	_, err = fd.WriteString("Filename, SizeInByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, HashSum, UUID, inNSRL, Entropy\r\n")
 	if err != nil {
+		fdr.ErrorLogger.Println(err)
 		log.Fatal(err)
 	}
 	for _, result := range resultList {
 		_, err := fd.WriteString(result + "\r\n")
 		if err != nil {
+			fdr.ErrorLogger.Println(err)
 			log.Fatal(err)
 		}
 	}
