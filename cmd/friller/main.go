@@ -98,7 +98,7 @@ func main() {
 
 	log.Println("info: Writing output to " + *oFile)
 
-	_, err = fd.WriteString("Filename, SizeinByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, HashSum, UUID, inNSRL, Entropy\r\n")
+	_, err = fd.WriteString("Filename, SizeinByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, " +strings.ToUpper(*hashAlg)+ ", UUID, inNSRL, Entropy\r\n")
 	if err != nil {
 		log.Fatal(err)
 	}
