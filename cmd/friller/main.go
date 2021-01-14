@@ -17,9 +17,9 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 package main
 
 import (
-	"flag"
 	fdr "github.com/dla-marbach/filedriller"
 	"github.com/gomodule/redigo/redis"
+	flag "github.com/spf13/pflag"
 	"log"
 	"os"
 	"runtime"
@@ -37,16 +37,19 @@ var Build string
 var SigFile string
 
 func main() {
+
 	var r fdr.RedisConf
-	rootDir := flag.String("in", "", "Root directory to work on")
-	hashAlg := flag.String("hash", "sha256", "The hash algorithm to use: md5, sha1, sha256, sha512, blake2b-512")
-	r.Server = flag.String("redisserv", "", "Redis server address for a NSRL database")
-	r.Port = flag.String("redisport", "6379", "Redis port number for a NSRL database")
-	sFile := flag.Bool("download", false, "Download siegfried's signature file")
-	oFile := flag.String("output", "info.csv", "Output file")
-	logFile := flag.String("log", "logs.txt", "Log file")
-	entro := flag.Bool("entropy", false, "Calculate the entropy of files. Limited to file sizes up to 1GB")
-	vers := flag.Bool("version", false, "Print version and build info")
+
+	rootDir := flag.StringP("in", "i", "", "Root directory to work on")
+	hashAlg := flag.StringP("algo", "a", "sha256", "The hash algorithm to use: md5, sha1, sha256, sha512, blake2b-512")
+	r.Server = flag.StringP("redisserv", "s", "", "Redis server address for a NSRL database")
+	r.Port = flag.StringP("redisport", "p", "6379", "Redis port number for a NSRL database")
+	sFile := flag.BoolP("download", "d", false, "Download siegfried's signature file")
+	oFile := flag.StringP("output", "o", "info.csv", "Output file")
+  iFile := flag.StringP("file", "f", "", "Inspect single file")
+  logFile := flag.StringP("log", "l", "logs.txt", "Log file")
+	entro := flag.BoolP("entropy", "e", false, "Calculate the entropy of files. Limited to file sizes up to 1GB")
+	vers := flag.BoolP("version", "v", false, "Print version and build info")
 
 	flag.Parse()
 
@@ -55,11 +58,15 @@ func main() {
 		return
 	}
 
-	log.Println("info: friller started")
+	if len(*iFile) == 0 {
+		log.Println("info: friller started")
+	}
 
-	if _, err := os.Stat("pronom.sig"); os.IsNotExist(err) {
-		log.Println("warning: No pronom.sig file found. Trying to download it.")
-		*sFile = true
+	if !*sFile {
+		if _, err := os.Stat("pronom.sig"); os.IsNotExist(err) {
+			log.Println("warning: No pronom.sig file found. Trying to download it.")
+			*sFile = true
+		}
 	}
 
 	if *sFile {
@@ -74,6 +81,21 @@ func main() {
 		log.Println("info: friller ended")
 		return
 	}
+
+	var nsrlEnabled bool
+	var conn redis.Conn
+	if *r.Server != "" {
+		nsrlEnabled = true
+		conn = fdr.RedisConnect(r)
+	}
+
+	// This is the single file processing. All we do is to create and pass a list of length 1
+	if len(*iFile) != 0 {
+		singleResult := fdr.IdentifyFiles([]string{*iFile}, *hashAlg, nsrlEnabled, conn, *entro)
+		println(singleResult[0])
+		return
+	}
+
 	if len(*rootDir) == 0 {
 		log.Println("error: -in is a mandatory flag")
 		return
@@ -82,6 +104,7 @@ func main() {
 	if !strings.HasSuffix(*rootDir, "/") {
 		*rootDir = *rootDir + "/"
 	}
+
 
 	// create the custom logger and write startup info
 	fdr.CreateLogger(*logFile)
@@ -101,6 +124,7 @@ func main() {
 	fdr.InfoLogger.Println("NSRL enabled: " + strconv.FormatBool(nsrlEnabled))
 
 	fileList := fdr.CreateFileList(*rootDir)
+
 	log.Println("info: Created file list. Found " + strconv.Itoa(len(fileList)) + " files.")
 	fdr.InfoLogger.Println("Inspecting " + strconv.Itoa(len(fileList)) + " files")
 	log.Println("info: Started file format identification")
@@ -118,7 +142,9 @@ func main() {
 
 	log.Println("info: Writing output to " + *oFile)
 
-	_, err = fd.WriteString("Filename, SizeInByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, HashSum, UUID, inNSRL, Entropy\r\n")
+
+	_, err = fd.WriteString("Filename, SizeInByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, " + strings.ToUpper(*hashAlg) + ", UUID, inNSRL, Entropy\r\n")
+
 	if err != nil {
 		fdr.ErrorLogger.Println(err)
 		log.Fatal(err)
