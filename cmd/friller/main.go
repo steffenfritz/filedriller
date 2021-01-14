@@ -115,12 +115,6 @@ func main() {
 	fdr.InfoLogger.Println("Siegfried signature file: " + SigFile)
 	fdr.InfoLogger.Println("Hash algorithm used: " + *hashAlg)
 
-	var nsrlEnabled bool
-	var conn redis.Conn
-	if *r.Server != "" {
-		nsrlEnabled = true
-		conn = fdr.RedisConnect(r)
-	}
 	fdr.InfoLogger.Println("NSRL enabled: " + strconv.FormatBool(nsrlEnabled))
 
 	fileList := fdr.CreateFileList(*rootDir)
