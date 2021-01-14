@@ -34,14 +34,18 @@ var Build string
 
 func main() {
 	var r filedriller.RedisConf
+
+
 	rootDir := flag.StringP("in", "i", "", "Root directory to work on")
 	hashAlg := flag.StringP("algo", "a", "sha256", "The hash algorithm to use: md5, sha1, sha256, sha512, blake2b-512")
 	r.Server = flag.StringP("redisserv", "s", "", "Redis server address for a NSRL database")
 	r.Port = flag.StringP("redisport", "p", "6379", "Redis port number for a NSRL database")
 	sFile := flag.BoolP("download", "d", false, "Download siegfried's signature file")
 	oFile := flag.StringP("output", "o", "info.csv", "Output file")
+  iFile := flag.String("file", "f", "Inspect single file")
 	entro := flag.BoolP("entropy", "e", false, "Calculate the entropy of files. Limited to file sizes up to 1GB")
 	vers := flag.BoolP("version", "v", false, "Print version and build info")
+
 
 	flag.Parse()
 
@@ -50,11 +54,15 @@ func main() {
 		return
 	}
 
-	log.Println("info: friller started")
+	if len(*iFile) == 0 {
+		log.Println("info: friller started")
+	}
 
-	if _, err := os.Stat("pronom.sig"); os.IsNotExist(err) {
-		log.Println("warning: No pronom.sig file found. Trying to download it.")
-		*sFile = true
+	if !*sFile {
+		if _, err := os.Stat("pronom.sig"); os.IsNotExist(err) {
+			log.Println("warning: No pronom.sig file found. Trying to download it.")
+			*sFile = true
+		}
 	}
 
 	if *sFile {
@@ -68,6 +76,20 @@ func main() {
 		log.Println("info: friller ended")
 		return
 	}
+
+	var nsrlEnabled bool
+	var conn redis.Conn
+	if *r.Server != "" {
+		nsrlEnabled = true
+		conn = filedriller.RedisConnect(r)
+	}
+
+	if len(*iFile) != 0 {
+		singleResult := filedriller.IdentifyFiles([]string{*iFile}, *hashAlg, nsrlEnabled, conn, *entro)
+		println(singleResult[0])
+		return
+	}
+
 	if len(*rootDir) == 0 {
 		log.Println("error: -in is a mandatory flag")
 		return
@@ -75,13 +97,6 @@ func main() {
 
 	if !strings.HasSuffix(*rootDir, "/") {
 		*rootDir = *rootDir + "/"
-	}
-
-	var nsrlEnabled bool
-	var conn redis.Conn
-	if *r.Server != "" {
-		nsrlEnabled = true
-		conn = filedriller.RedisConnect(r)
 	}
 
 	fileList := filedriller.CreateFileList(*rootDir)
