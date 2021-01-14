@@ -17,14 +17,17 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 package main
 
 import (
-	fdr "github.com/dla-marbach/filedriller"
-	"github.com/gomodule/redigo/redis"
-	flag "github.com/spf13/pflag"
+	"bufio"
 	"log"
 	"os"
 	"runtime"
 	"strconv"
 	"strings"
+
+	"github.com/gomodule/redigo/redis"
+	flag "github.com/spf13/pflag"
+
+	fdr "github.com/dla-marbach/filedriller"
 )
 
 // Version holds the version of filedriller
@@ -46,8 +49,8 @@ func main() {
 	r.Port = flag.StringP("redisport", "p", "6379", "Redis port number for a NSRL database")
 	sFile := flag.BoolP("download", "d", false, "Download siegfried's signature file")
 	oFile := flag.StringP("output", "o", "info.csv", "Output file")
-  iFile := flag.StringP("file", "f", "", "Inspect single file")
-  logFile := flag.StringP("log", "l", "logs.txt", "Log file")
+	iFile := flag.StringP("file", "f", "", "Inspect single file")
+	logFile := flag.StringP("log", "l", "logs.txt", "Log file")
 	entro := flag.BoolP("entropy", "e", false, "Calculate the entropy of files. Limited to file sizes up to 1GB")
 	vers := flag.BoolP("version", "v", false, "Print version and build info")
 
@@ -105,6 +108,18 @@ func main() {
 		*rootDir = *rootDir + "/"
 	}
 
+	if _, err := os.Stat(*logFile); err == nil {
+		log.Printf("warning: Log file exists. Quit or append? [Q/a]")
+		reader := bufio.NewReader(os.Stdin)
+		decision := "Q"
+		decision, _ = reader.ReadString('\n')
+		decision = strings.TrimSuffix(decision, "\n")
+
+		if decision == "Q" || decision != "a"{
+			log.Println("info: Quitting filedriller")
+			return
+		}
+	}
 
 	// create the custom logger and write startup info
 	fdr.CreateLogger(*logFile)
@@ -136,7 +151,6 @@ func main() {
 
 	log.Println("info: Writing output to " + *oFile)
 
-
 	_, err = fd.WriteString("Filename, SizeInByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, " + strings.ToUpper(*hashAlg) + ", UUID, inNSRL, Entropy\r\n")
 
 	if err != nil {
@@ -153,6 +167,7 @@ func main() {
 
 	log.Println("info: Output written to " + *oFile)
 	fdr.InfoLogger.Println("Output written to " + *oFile)
+	log.Println("info: Log file written to " + *logFile)
 
 	log.Println("info: friller ended")
 	fdr.InfoLogger.Println("friller stopped")
