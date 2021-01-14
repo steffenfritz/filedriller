@@ -28,6 +28,7 @@ import (
 
 // Version holds the version of filedriller
 var Version string
+
 // Build holds the sha1 fingerprint of the build
 var Build string
 
@@ -39,7 +40,7 @@ func main() {
 	r.Port = flag.String("redisport", "6379", "Redis port number for a NSRL database")
 	sFile := flag.Bool("download", false, "Download siegfried's signature file")
 	oFile := flag.String("output", "info.csv", "Output file")
-        iFile := flag.String("infile", "", "Inspect single file")
+	iFile := flag.String("infile", "", "Inspect single file")
 	entro := flag.Bool("entropy", false, "Calculate the entropy of files. Limited to file sizes up to 1GB")
 	vers := flag.Bool("version", false, "Print version and build info")
 
@@ -50,11 +51,15 @@ func main() {
 		return
 	}
 
-	log.Println("info: friller started")
+	if len(*iFile) == 0 {
+		log.Println("info: friller started")
+	}
 
-	if _, err := os.Stat("pronom.sig"); os.IsNotExist(err) {
-		log.Println("warning: No pronom.sig file found. Trying to download it.")
-		*sFile = true
+	if !*sFile {
+		if _, err := os.Stat("pronom.sig"); os.IsNotExist(err) {
+			log.Println("warning: No pronom.sig file found. Trying to download it.")
+			*sFile = true
+		}
 	}
 
 	if *sFile {
@@ -69,12 +74,18 @@ func main() {
 		return
 	}
 
-	if len(*iFile) != 0 {
-	// ToDo
-                log.Println("ToDo")
-		return
+	var nsrlEnabled bool
+	var conn redis.Conn
+	if *r.Server != "" {
+		nsrlEnabled = true
+		conn = filedriller.RedisConnect(r)
+	}
 
-        }
+	if len(*iFile) != 0 {
+		singleResult := filedriller.IdentifyFiles([]string{*iFile}, *hashAlg, nsrlEnabled, conn, *entro)
+		println(singleResult[0])
+		return
+	}
 
 	if len(*rootDir) == 0 {
 		log.Println("error: -in is a mandatory flag")
@@ -83,13 +94,6 @@ func main() {
 
 	if !strings.HasSuffix(*rootDir, "/") {
 		*rootDir = *rootDir + "/"
-	}
-
-	var nsrlEnabled bool
-	var conn redis.Conn
-	if *r.Server != "" {
-		nsrlEnabled = true
-		conn = filedriller.RedisConnect(r)
 	}
 
 	fileList := filedriller.CreateFileList(*rootDir)
