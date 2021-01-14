@@ -42,7 +42,7 @@ func main() {
 	r.Port = flag.StringP("redisport", "p", "6379", "Redis port number for a NSRL database")
 	sFile := flag.BoolP("download", "d", false, "Download siegfried's signature file")
 	oFile := flag.StringP("output", "o", "info.csv", "Output file")
-  iFile := flag.String("file", "f", "Inspect single file")
+    iFile := flag.StringP("file", "f", "", "Inspect single file")
 	entro := flag.BoolP("entropy", "e", false, "Calculate the entropy of files. Limited to file sizes up to 1GB")
 	vers := flag.BoolP("version", "v", false, "Print version and build info")
 
