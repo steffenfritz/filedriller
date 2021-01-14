@@ -84,6 +84,7 @@ func main() {
 		conn = filedriller.RedisConnect(r)
 	}
 
+	// This is the single file processing. All we do is to create and pass a list of length 1
 	if len(*iFile) != 0 {
 		singleResult := filedriller.IdentifyFiles([]string{*iFile}, *hashAlg, nsrlEnabled, conn, *entro)
 		println(singleResult[0])
