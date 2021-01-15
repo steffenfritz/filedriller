@@ -27,7 +27,7 @@ friller
 .SH SYNOPSIS
 .B friller [OPTION]
 .SH DESCRIPTION
-filedriller walks a directory tree and identifies all regular files by type using siegfried. Furthermore it creates UUIDv4s, hash sums (md5, sha1, sha256, sha512 or blake2b-512) and filedriller can check if the file is in the NSRL.
+filedriller walks a directory tree and identifies all regular files by type using siegfried. Furthermore it creates UUIDv4s, hash sums (md5, sha1, sha256, sha512 or blake2b-512) and calculates file entropies. filedriller can check if the file is in the NSRL.
 
 .SH FLAGS
 
@@ -38,13 +38,16 @@ filedriller walks a directory tree and identifies all regular files by type usin
     Download siegfried's signature file
 
 .BR \-e,\ --entropy\fR
-    	Calculate the entropy of files. Limited to file sizes up to 1GB
+   	Calculate the entropy of files. Limited to file sizes up to 1GB
 
 .BR \-i,\ --in\ DIRECTORY\fR
     Root directory to work on   
  
 .BR \-o,\ --output\ FILENAME\fR
     Output file (default "info.csv")
+
+.BR \-l,\ --log\ FILENAME\fR
+    Log file (default "logs.txt")
 
 .BR \-p,\ --redisport\ PORT\fR
     Redis port number for a NSRL database (default "6379")
