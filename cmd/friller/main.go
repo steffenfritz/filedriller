@@ -115,7 +115,7 @@ func main() {
 		decision, _ = reader.ReadString('\n')
 		decision = strings.TrimSuffix(decision, "\n")
 
-		if decision == "Q" || decision != "a"{
+		if decision == "Q" || decision != "a" {
 			log.Println("info: Quitting filedriller")
 			return
 		}
@@ -130,7 +130,8 @@ func main() {
 	fdr.InfoLogger.Println("Siegfried signature file: " + SigFile)
 	fdr.InfoLogger.Println("Hash algorithm used: " + *hashAlg)
 
-	fdr.InfoLogger.Println("NSRL enabled: " + strconv.FormatBool(nsrlEnabled))
+	fdr.InfoLogger.Println("NSRL lookup enabled: " + strconv.FormatBool(nsrlEnabled))
+	fdr.InfoLogger.Println("Entropy calculation enabled: " + strconv.FormatBool(*entro))
 
 	fileList := fdr.CreateFileList(*rootDir)
 
