@@ -67,7 +67,7 @@ then
 
 The output is written to a CSV file. Schema of the file:
 
-    Filename, SizeInByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, HashSum, UUID, inNSRL, Entropy
+    Filename, SizeInByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, Hash Name, UUID, inNSRL, Entropy
 
 ## Flags
 

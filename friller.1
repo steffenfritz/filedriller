@@ -27,32 +27,35 @@ friller
 .SH SYNOPSIS
 .B friller [OPTION]
 .SH DESCRIPTION
-filedriller walks a directory tree and identifies all regular files by type using siegfried. Furthermore it creates UUIDv4s, hash sums (md5, sha1, sha256, sha512 or blake2b-512) and filedriller can check if the file is in the NSRL.
+filedriller walks a directory tree and identifies all regular files by type using siegfried. Furthermore it creates UUIDv4s, hash sums (md5, sha1, sha256, sha512 or blake2b-512) and calculates file entropies. filedriller can check if the file is in the NSRL.
 
 .SH FLAGS
 
-.BR \-download\fR 
-    Download siegfried's signature file
-
-.BR \-entropy\fR
-    	Calculate the entropy of files. Limited to file sizes up to 1GB
-
-.BR \-hash\ HASHNAME\fR 
+.BR \-a,\ --algo\ HASHNAME\fR
     The hash algorithm to use: md5, sha1, sha256, sha512, blake2b-512 (default "sha256")
 
-.BR \-in\ DIRECTORY\fR 
+.BR \-d,\ --download\fR
+    Download siegfried's signature file
+
+.BR \-e,\ --entropy\fR
+   	Calculate the entropy of files. Limited to file sizes up to 1GB
+
+.BR \-i,\ --in\ DIRECTORY\fR
     Root directory to work on   
  
-.BR \-output\ FILENAME\fR
+.BR \-o,\ --output\ FILENAME\fR
     Output file (default "info.csv")
 
-.BR \-redisport\ PORT\fR
+.BR \-l,\ --log\ FILENAME\fR
+    Log file (default "logs.txt")
+
+.BR \-p,\ --redisport\ PORT\fR
     Redis port number for a NSRL database (default "6379")
 
-.BR \-redisserv\ SERVER \fR
+.BR \-s,\ --redisserv\ SERVER \fR
     Redis server address for a NSRL database
 
-.BR \-version\fR
+.BR \-v,\ --version\fR
     Print version and build info
 
 .SH AUTHOR
