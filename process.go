@@ -36,7 +36,7 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 	var resultList []string
 	s, err := siegfried.Load("pronom.sig")
 	if err != nil {
-		log.Fatal(err)
+		e(err)
 	}
 
 	var calcNSRL bool
