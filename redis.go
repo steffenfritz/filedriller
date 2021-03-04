@@ -2,14 +2,13 @@ package filedriller
 
 import (
 	"github.com/gomodule/redigo/redis"
-	"log"
 )
 
 // RedisConnect creates a connection to a Redis server
 func RedisConnect(r RedisConf) redis.Conn {
 	conn, err := redis.Dial("tcp", *r.Server+":"+*r.Port)
 	if err != nil {
-		log.Fatal(err)
+		e(err)
 	}
 
 	return conn

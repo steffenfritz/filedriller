@@ -61,10 +61,12 @@ func main() {
 		return
 	}
 
+	// Check if single file inspection is not requested
 	if len(*iFile) == 0 {
 		log.Println("info: friller started")
 	}
 
+	// Check if a download is not requested
 	if !*sFile {
 		if _, err := os.Stat("pronom.sig"); os.IsNotExist(err) {
 			log.Println("warning: No pronom.sig file found. Trying to download it.")
@@ -72,6 +74,7 @@ func main() {
 		}
 	}
 
+	// Check if friller should download the pronom.sig file
 	if *sFile {
 
 		err := fdr.DownloadPronom()

@@ -1,9 +1,9 @@
 package filedriller
 
-import "log"
+import "github.com/pkg/errors"
 
 func e(err error) {
 	if err != nil {
-		log.Fatal(err)
+		errors.Cause(err)
 	}
 }
