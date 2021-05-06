@@ -2,7 +2,6 @@ package filedriller
 
 import (
 	"encoding/hex"
-	"log"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -25,7 +24,7 @@ func CreateFileList(rootDir string) []string {
 		return nil
 	})
 	if err != nil {
-		log.Println(err)
+		ErrorLogger.Println(err)
 	}
 	return fileList
 }
@@ -47,9 +46,9 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 	var entroFile float64
 
 	for _, filePath := range fileList {
-		oneFileResult := siegfriedIdent(s, filePath)
-		if oneFileResult == "err" {
-			continue
+		successful, oneFileResult := siegfriedIdent(s, filePath)
+		if !successful {
+			ErrorLogger.Println(oneFileResult)
 		}
 
 		onefilehash := hex.EncodeToString(Hashit(filePath, hashDigest))

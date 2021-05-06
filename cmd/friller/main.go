@@ -39,6 +39,10 @@ var Build string
 // SigFile holds the download date of the signature file
 var SigFile string
 
+// we make this two gloablly available for usage inside imported customized loggers
+var	logFile = flag.StringP("log", "l", "logs.txt", "Log file")
+var	errlogFile = flag.StringP("errlog", "w", "errorlogs.txt", "Error log file")
+
 func main() {
 
 	var r fdr.RedisConf
@@ -50,11 +54,13 @@ func main() {
 	sFile := flag.BoolP("download", "d", false, "Download siegfried's signature file")
 	oFile := flag.StringP("output", "o", "info.csv", "Output file")
 	iFile := flag.StringP("file", "f", "", "Inspect single file")
-	logFile := flag.StringP("log", "l", "logs.txt", "Log file")
 	entro := flag.BoolP("entropy", "e", false, "Calculate the entropy of files. Limited to file sizes up to 1GB")
 	vers := flag.BoolP("version", "v", false, "Print version and build info")
 
 	flag.Parse()
+
+	fdr.CreateLogger(*logFile)
+	fdr.CreateErrorLogger(*errlogFile)
 
 	if *vers {
 		log.Printf("Version: %s. Build: %s. Signature Version: %s", Version, Build, SigFile)
@@ -82,7 +88,7 @@ func main() {
 			log.Println(err)
 		}
 		log.Println("info: Downloaded pronom.sig file")
-		log.Println("info: Please start friller again")
+		log.Println("info: Please restart friller")
 		log.Println("info: No log file written")
 		log.Println("info: friller ended")
 		return
@@ -96,6 +102,7 @@ func main() {
 	}
 
 	// This is the single file processing. All we do is to create and pass a list of length 1
+	// process item 0 from list and return
 	if len(*iFile) != 0 {
 		singleResult := fdr.IdentifyFiles([]string{*iFile}, *hashAlg, nsrlEnabled, conn, *entro)
 		println(singleResult[0])
@@ -111,21 +118,22 @@ func main() {
 		*rootDir = *rootDir + "/"
 	}
 
-	if _, err := os.Stat(*logFile); err == nil {
-		log.Printf("warning: Log file exists. Quit or append? [Q/a]")
+	// check if log files are present and if whether they are empty
+	if fi, err := os.Stat(*logFile); err == nil && fi.Size() != 0 {
+		log.Printf("warning: Log not empty. Quit or append? [Q/a]")
 		reader := bufio.NewReader(os.Stdin)
 		decision := "Q"
 		decision, _ = reader.ReadString('\n')
 		decision = strings.TrimSuffix(decision, "\n")
 
-		if decision == "Q" || decision != "a" {
+		if decision != "a" {
 			log.Println("info: Quitting filedriller")
 			return
 		}
 	}
 
 	// create the custom logger and write startup info
-	fdr.CreateLogger(*logFile)
+	//fdr.CreateLogger(*logFile)
 	fdr.InfoLogger.Println("friller started")
 	fdr.InfoLogger.Println("Platform: " + runtime.GOOS + " on " + runtime.GOARCH)
 	fdr.InfoLogger.Println("Friller Version: " + Version)
@@ -137,10 +145,10 @@ func main() {
 	fdr.InfoLogger.Println("Entropy calculation enabled: " + strconv.FormatBool(*entro))
 
 	fileList := fdr.CreateFileList(*rootDir)
-
 	log.Println("info: Created file list. Found " + strconv.Itoa(len(fileList)) + " files.")
 	fdr.InfoLogger.Println("Inspecting " + strconv.Itoa(len(fileList)) + " files")
 	log.Println("info: Started file format identification")
+
 	resultList := fdr.IdentifyFiles(fileList, *hashAlg, nsrlEnabled, conn, *entro)
 	log.Println("info: Inspected " + strconv.Itoa(len(resultList)) + " files.")
 	fdr.InfoLogger.Println("Inspected " + strconv.Itoa(len(resultList)) + " files.")
@@ -172,6 +180,7 @@ func main() {
 	log.Println("info: Output written to " + *oFile)
 	fdr.InfoLogger.Println("Output written to " + *oFile)
 	log.Println("info: Log file written to " + *logFile)
+	log.Println("info: Error log file written to " + *errlogFile)
 
 	log.Println("info: friller ended")
 	fdr.InfoLogger.Println("friller stopped")

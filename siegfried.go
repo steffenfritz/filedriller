@@ -8,22 +8,24 @@ import (
 	"github.com/richardlehane/siegfried"
 )
 
-func siegfriedIdent(s *siegfried.Siegfried, inFile string) string {
+func siegfriedIdent(s *siegfried.Siegfried, inFile string) (bool, string) {
 	var oneFile string
+	var resultBool bool
 	f, err := os.Open(inFile)
 	if err != nil {
 		log.Println(err)
-		return "err"
+		return resultBool, err.Error()
 	} else {
 		defer f.Close()
 		fi, _ := f.Stat()
 		if fi.Size() == 0 {
-			return inFile + ",,,,,,,,"
+			return resultBool, inFile + ",,,,,,,,"
 		}
 		ids, err := s.Identify(f, "", "")
 		if err != nil {
-			log.Println(err)
-			return "err"
+			ret := inFile + " : " + err.Error()
+			log.Println(ret)
+			return resultBool, ret
 		}
 		for _, id := range ids {
 			values := id.Values()
@@ -34,6 +36,6 @@ func siegfriedIdent(s *siegfried.Siegfried, inFile string) string {
 		}
 	}
 
-	return oneFile
+	return true, oneFile
 
 }
