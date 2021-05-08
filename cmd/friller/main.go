@@ -25,9 +25,9 @@ import (
 	"strings"
 
 	"github.com/gomodule/redigo/redis"
-	flag "github.com/spf13/pflag"
 
 	fdr "github.com/dla-marbach/filedriller"
+	flag "github.com/spf13/pflag"
 )
 
 // Version holds the version of filedriller
@@ -40,8 +40,8 @@ var Build string
 var SigFile string
 
 // we make this two gloablly available for usage inside imported customized loggers
-var	logFile = flag.StringP("log", "l", "logs.txt", "Log file")
-var	errlogFile = flag.StringP("errlog", "w", "errorlogs.txt", "Error log file")
+var logFile = flag.StringP("log", "l", "logs.txt", "Log file")
+var errlogFile = flag.StringP("errlog", "w", "errorlogs.txt", "Error log file")
 
 func main() {
 
@@ -59,6 +59,7 @@ func main() {
 
 	flag.Parse()
 
+	// Create two loggers for two log files, standard and error
 	fdr.CreateLogger(*logFile)
 	fdr.CreateErrorLogger(*errlogFile)
 
@@ -180,18 +181,18 @@ func main() {
 	log.Println("info: Output written to " + *oFile)
 	fdr.InfoLogger.Println("Output written to " + *oFile)
 	log.Println("info: Log file written to " + *logFile)
-       
-        // Delete empty error log file 
-        if fi, err := os.Stat(*errlogFile); err == nil && fi.Size() == 0 {
-            err := os.Remove(*errlogFile)
-            if err != nil {
-                log.Println("error: Could not delete empty error log file.")
-                log.Println(err)
-            }
-      	
-        } else {
-                log.Println("info: Error log file written to " + *errlogFile)
-       }
+
+	// Delete empty error log file
+	if fi, err := os.Stat(*errlogFile); err == nil && fi.Size() == 0 {
+		err := os.Remove(*errlogFile)
+		if err != nil {
+			log.Println("error: Could not delete empty error log file.")
+			log.Println(err)
+		}
+
+	} else {
+		log.Println("info: Error log file written to " + *errlogFile)
+	}
 
 	log.Println("info: friller ended")
 	fdr.InfoLogger.Println("friller stopped")

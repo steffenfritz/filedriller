@@ -3,6 +3,7 @@ module github.com/dla-marbach/filedriller
 go 1.15
 
 require (
+	github.com/cheggaaa/pb/v3 v3.0.8
 	github.com/gomodule/redigo v1.8.3
 	github.com/google/uuid v1.1.4
 	github.com/pkg/errors v0.9.1

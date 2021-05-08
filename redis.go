@@ -4,6 +4,12 @@ import (
 	"github.com/gomodule/redigo/redis"
 )
 
+// RedisConf holds the config of a redis server
+type RedisConf struct {
+	Server *string
+	Port   *string
+}
+
 // RedisConnect creates a connection to a Redis server
 func RedisConnect(r RedisConf) redis.Conn {
 	conn, err := redis.Dial("tcp", *r.Server+":"+*r.Port)
