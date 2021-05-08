@@ -73,34 +73,34 @@ The output is written to a CSV file. Schema of the file:
 
 Usage of ./friller:
   
-  -download
+  --download, -d
   
     	Download siegfried's signature file
   
-  -entropy
+  --entropy, -e
 
     	Calculate the entropy of files. Limited to file sizes up to 1GB
   
-  -hash string
+  --hash, -h string
   
     	The hash algorithm to use: md5, sha1, sha256, sha512, blake2b-512 (default "sha256")
   
-  -in string
+  --in, -i string
   
     	Root directory to work on
   
-  -output string
+  --output, -o string
   
     	Output file (default "info.csv")
   
-  -redisport string
+  --redisport, -s string
   
     	Redis port number for a NSRL database (default "6379")
   
-  -redisserv string
+  --redisserv, -p string
   
     	Redis server address for a NSRL database
  
-  -version
+  --version, -v
 
     	Print version and build info

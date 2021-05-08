@@ -180,7 +180,18 @@ func main() {
 	log.Println("info: Output written to " + *oFile)
 	fdr.InfoLogger.Println("Output written to " + *oFile)
 	log.Println("info: Log file written to " + *logFile)
-	log.Println("info: Error log file written to " + *errlogFile)
+       
+        // Delete empty error log file 
+        if fi, err := os.Stat(*errlogFile); err == nil && fi.Size() == 0 {
+            err := os.Remove(*errlogFile)
+            if err != nil {
+                log.Println("error: Could not delete empty error log file.")
+                log.Println(err)
+            }
+      	
+        } else {
+                log.Println("info: Error log file written to " + *errlogFile)
+       }
 
 	log.Println("info: friller ended")
 	fdr.InfoLogger.Println("friller stopped")
