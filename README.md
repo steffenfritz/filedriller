@@ -80,6 +80,10 @@ Usage of ./friller:
   --entropy, -e
 
     	Calculate the entropy of files. Limited to file sizes up to 1GB
+        
+  --errlog, -w      
+  
+        Error log file (default "errorlogs.txt")
   
   --hash, -h string
   
@@ -88,6 +92,10 @@ Usage of ./friller:
   --in, -i string
   
     	Root directory to work on
+  
+  --log, -l string         
+         
+         Log file (default "logs.txt")
   
   --output, -o string
   
