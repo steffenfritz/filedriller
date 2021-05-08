@@ -45,7 +45,17 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 
 	var entroFile float64
 
-	bar := pb.StartNew(len(fileList))
+	showBar := true
+
+	if len(fileList) < 2 {
+		showBar = false
+	}
+
+	bar := pb.New(len(fileList))
+
+	if showBar {
+		bar.Start()
+	}
 
 	for _, filePath := range fileList {
 		successful, oneFileResult := siegfriedIdent(s, filePath)
@@ -84,7 +94,10 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 		}
 
 		resultList = append(resultList, oneFile)
-		bar.Increment()
+
+		if showBar {
+			bar.Increment()
+		}
 	}
 
 	bar.Finish()

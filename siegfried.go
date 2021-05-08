@@ -21,7 +21,7 @@ func siegfriedIdent(s *siegfried.Siegfried, inFile string) (bool, string) {
 
 	fi, _ := f.Stat()
 	if fi.Size() == 0 {
-		return resultBool, "empty file : " + inFile + ",,,,,,,,"
+		return resultBool, "\"" + inFile + "\",,,,,,,,"
 	}
 
 	ids, err := s.Identify(f, "", "")

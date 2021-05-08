@@ -59,10 +59,6 @@ func main() {
 
 	flag.Parse()
 
-	// Create two loggers for two log files, standard and error
-	fdr.CreateLogger(*logFile)
-	fdr.CreateErrorLogger(*errlogFile)
-
 	if *vers {
 		log.Printf("Version: %s. Build: %s. Signature Version: %s", Version, Build, SigFile)
 		return
@@ -109,6 +105,10 @@ func main() {
 		println(singleResult[0])
 		return
 	}
+
+	// Create two loggers for two log files, standard and error
+	fdr.CreateLogger(*logFile)
+	fdr.CreateErrorLogger(*errlogFile)
 
 	if len(*rootDir) == 0 {
 		log.Println("error: -in is a mandatory flag")
