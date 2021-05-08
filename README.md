@@ -77,7 +77,7 @@ Usage of ./friller:
   
     	Download siegfried's signature file
   
-  --entropy. -e
+  --entropy, -e
 
     	Calculate the entropy of files. Limited to file sizes up to 1GB
   
