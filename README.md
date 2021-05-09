@@ -49,19 +49,21 @@ then
 ## Usage Examples
 0. Fetch the pronom.sig file
 
-        friller -download
+        friller --download
 
 1. Without Redis / NSRL
 
-        friller -in SOMEDIRECTORY
+        friller --in SOMEDIRECTORY
 
 2. With Redis / NSRL
 
-        friller -in SOMEDIRECTORY -redisserv localhost
+        friller --in SOMEDIRECTORY --redisserv localhost
 
 3. With alternate output file
 
-        friller -in SOMEDIRECTORY -output foo.csv
+        friller --in SOMEDIRECTORY -output foo.csv
+        
+asciinema recording: https://asciinema.org/a/ZPAW3ovkYNR4flK5C5wmi2GAA
 
 ## Output
 
