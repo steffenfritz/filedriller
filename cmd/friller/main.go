@@ -111,7 +111,7 @@ func main() {
 	fdr.CreateErrorLogger(*errlogFile)
 
 	if len(*rootDir) == 0 {
-		log.Println("error: -in is a mandatory flag")
+		log.Println("error: -i is a mandatory flag")
 		return
 	}
 
