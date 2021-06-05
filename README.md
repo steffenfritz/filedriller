@@ -49,58 +49,68 @@ then
 ## Usage Examples
 0. Fetch the pronom.sig file
 
-        friller -download
+        friller --download
 
 1. Without Redis / NSRL
 
-        friller -in SOMEDIRECTORY
+        friller --in SOMEDIRECTORY
 
 2. With Redis / NSRL
 
-        friller -in SOMEDIRECTORY -redisserv localhost
+        friller --in SOMEDIRECTORY --redisserv localhost
 
 3. With alternate output file
 
-        friller -in SOMEDIRECTORY -output foo.csv
+        friller --in SOMEDIRECTORY -output foo.csv
+        
+asciinema recording: https://asciinema.org/a/ZPAW3ovkYNR4flK5C5wmi2GAA
 
 ## Output
 
 The output is written to a CSV file. Schema of the file:
 
-    Filename, SizeInByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, HashSum, UUID, inNSRL, Entropy
+    Filename, SizeInByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, Hash Name, UUID, inNSRL, Entropy
 
 ## Flags
 
 Usage of ./friller:
   
-  -download
+  --download, -d
   
     	Download siegfried's signature file
   
-  -entropy
+  --entropy, -e
 
     	Calculate the entropy of files. Limited to file sizes up to 1GB
+        
+  --errlog, -w      
   
-  -hash string
+        Error log file (default "errorlogs.txt")
+  
+  --hash, -h string
   
     	The hash algorithm to use: md5, sha1, sha256, sha512, blake2b-512 (default "sha256")
   
-  -in string
+  --in, -i string
   
     	Root directory to work on
   
-  -output string
+  --log, -l string         
+         
+         Log file (default "logs.txt")
+  
+  --output, -o string
   
     	Output file (default "info.csv")
   
-  -redisport string
+  --redisport, -s string
   
     	Redis port number for a NSRL database (default "6379")
   
-  -redisserv string
+  --redisserv, -p string
   
     	Redis server address for a NSRL database
  
-  -version
+  --version, -v
 
     	Print version and build info

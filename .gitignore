@@ -13,6 +13,9 @@
 /cmd/friller/info.csv
 .idea/
 cmd/friller/pronom.sig
+pronom.sig
+errorlogs.txt
+logs.txt
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out

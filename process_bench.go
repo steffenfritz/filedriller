@@ -27,6 +27,7 @@ func BenchmarkCreateFileList(b *testing.B) {
 	}
 }
 
+// BenchmarkIdentifyFiles benchmarks the process of identifying one file
 func BenchmarkIdentifyFiles(b *testing.B) {
 	type args struct {
 		fileList     []string

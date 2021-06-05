@@ -2,12 +2,12 @@ package filedriller
 
 import (
 	"encoding/hex"
-	"log"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
 
+	"github.com/cheggaaa/pb/v3"
 	"github.com/gomodule/redigo/redis"
 	"github.com/richardlehane/siegfried"
 )
@@ -25,18 +25,17 @@ func CreateFileList(rootDir string) []string {
 		return nil
 	})
 	if err != nil {
-		log.Println(err)
+		ErrorLogger.Println(err)
 	}
 	return fileList
 }
 
 // IdentifyFiles creates metadata with siegfried and hashsum
 func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn redis.Conn, entroEnabled bool) []string {
-
 	var resultList []string
 	s, err := siegfried.Load("pronom.sig")
 	if err != nil {
-		log.Fatal(err)
+		e(err)
 	}
 
 	var calcNSRL bool
@@ -46,14 +45,29 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 
 	var entroFile float64
 
+	showBar := true
+
+	if len(fileList) < 2 {
+		showBar = false
+	}
+
+	bar := pb.New(len(fileList))
+
+	if showBar {
+		bar.Start()
+	}
+
 	for _, filePath := range fileList {
-		oneFileResult := siegfriedIdent(s, filePath)
-		if oneFileResult == "err" {
-			continue
+		successful, oneFileResult := siegfriedIdent(s, filePath)
+		if !successful {
+			ErrorLogger.Println(oneFileResult)
 		}
 
 		onefilehash := hex.EncodeToString(Hashit(filePath, hashDigest))
 		oneFile := oneFileResult + ",\"" + onefilehash + "\",\"" + CreateUUID() + "\","
+
+		// we need a sha1 for redis. if sha1 is not used in this run we
+		// need to calculate sha1 for redis if nsrl is enabled
 		if nsrlEnabled {
 			var nsrlHash string
 			if calcNSRL {
@@ -80,7 +94,13 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 		}
 
 		resultList = append(resultList, oneFile)
+
+		if showBar {
+			bar.Increment()
+		}
 	}
+
+	bar.Finish()
 
 	return resultList
 }
