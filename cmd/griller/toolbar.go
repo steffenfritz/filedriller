@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"fyne.io/fyne/theme"
-	"fyne.io/fyne/widget"
+	"fyne.io/fyne/v2/theme"
+	"fyne.io/fyne/v2/widget"
 )
 
 func createToolbar() *widget.Toolbar {

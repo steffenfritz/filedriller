@@ -1,6 +1,6 @@
 package main
 
-import "fyne.io/fyne/widget"
+import "fyne.io/fyne/v2/widget"
 
 // genericInput creates a generic form widget
 func genericInput(formkeytext string) (*widget.Entry, *widget.Form) {
