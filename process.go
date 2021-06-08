@@ -111,7 +111,11 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 // IdentifyFiles() should be refactored and split
 func IdentifyFilesGUI(fileList []string, nsrlEnabled bool, conf Config, progress *float64) []string {
 	var resultList []string
-	s, err := siegfried.Load("pronom.sig")
+
+	// debugging
+	//exe, _ := os.Executable()
+	//s, err := siegfried.Load(filepath.Join(filepath.Dir(exe),"pronom.sig"))
+	s, err := siegfried.Load("/Users/steffen/pronom.sig")
 	if err != nil {
 		e(err)
 	}

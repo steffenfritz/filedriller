@@ -10,6 +10,10 @@ import (
 	fdr "github.com/dla-marbach/filedriller"
 )
 
+// we make these two globally available for usage inside imported customized loggers
+var logfilevalue widget.Entry
+var elogfilevalue widget.Entry
+
 func main(){
 	var conf fdr.Config
 
@@ -29,10 +33,12 @@ func main(){
 	outputfilevalue, outputfilefield := genericInput("Output file")
 
 	// Log output
-	// logfilevalue, logfilefield := genericInput("Log file")
+	logfilevalue.Text = "logs.txt"
+	logfilevalue, logfilefield := genericInput("Log file")
 
 	// Error log output
-	// elogfilevalue, elogfilefield := genericInput("Error log file")
+	elogfilevalue.Text = "errorlogs.txt"
+	elogfilevalue, elogfilefield := genericInput("Error log file")
 
 	// Fixity 
 	fixitywidget := widget.NewSelect([]string{"md5", "sha1", "sha256", "sha512", "blake2b-512"}, func(value string) {
@@ -42,9 +48,13 @@ func main(){
 
 	mainInputContainer := fyne.NewContainerWithLayout(layout.NewVBoxLayout(),
 		rootdirfield,
-		outputfilefield)
+		outputfilefield,
+		logfilefield,
+		elogfilefield)
 
 	okbutton := widget.NewButton("Start", func() {
+		fdr.CreateLogger(logfilevalue.Text)
+		fdr.CreateErrorLogger(elogfilevalue.Text)
 		if !strings.HasSuffix(rootdirvalue.Text, "/") {
 			rootdirvalue.Text = rootdirvalue.Text + "/"
 		}

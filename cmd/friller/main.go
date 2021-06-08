@@ -39,7 +39,7 @@ var Build string
 // SigFile holds the download date of the signature file
 var SigFile string
 
-// we make this two gloablly available for usage inside imported customized loggers
+// we make these two globally available for usage inside imported customized loggers
 var logFile = flag.StringP("log", "l", "logs.txt", "Log file")
 var errlogFile = flag.StringP("errlog", "w", "errorlogs.txt", "Error log file")
 
