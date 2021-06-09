@@ -14,6 +14,13 @@ import (
 var logfilevalue widget.Entry
 var elogfilevalue widget.Entry
 
+// Version holds the version of filedriller
+var Version string
+// Build holds the sha1 fingerprint of the build
+var Build string
+// SigFile holds the download date of the signature file
+var SigFile string
+
 func main(){
 	var conf fdr.Config
 
@@ -31,14 +38,21 @@ func main(){
 
 	// Save output file
 	outputfilevalue, outputfilefield := genericInput("Output file")
+	if len(outputfilevalue.Text) == 0 {
+		outputfilevalue.Text = "info.csv"
+	}
 
 	// Log output
-	logfilevalue.Text = "logs.txt"
 	logfilevalue, logfilefield := genericInput("Log file")
+	if len(logfilevalue.Text) == 0 {
+		logfilevalue.Text = "logs.txt"
+	}
 
 	// Error log output
-	elogfilevalue.Text = "errorlogs.txt"
 	elogfilevalue, elogfilefield := genericInput("Error log file")
+	if len(elogfilevalue.Text) == 0 {
+		elogfilevalue.Text = "errorlogs.txt"
+	}
 
 	// Fixity 
 	fixitywidget := widget.NewSelect([]string{"md5", "sha1", "sha256", "sha512", "blake2b-512"}, func(value string) {
@@ -63,6 +77,7 @@ func main(){
 		conf.OFile = outputfilevalue.Text
 		resultList := fdr.IdentifyFilesGUI(filelist, false, conf, &progressbar.Max)
 		fdr.WriteCSV(&outputfilevalue.Text, &conf.HashAlg, resultList)
+		fdr.WriteLogfile(Version, Build, SigFile,conf.HashAlg,false, conf.Entro, filelist, resultList)
 	})
 	quitbutton := widget.NewButton("Quit", func() { a.Quit() })
 	buttoncontainer := fyne.NewContainerWithLayout(layout.NewHBoxLayout(), okbutton, quitbutton)

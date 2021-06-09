@@ -2,6 +2,8 @@ package filedriller
 
 import (
 	"os"
+	"runtime"
+	"strconv"
 	"strings"
 )
 
@@ -27,4 +29,18 @@ func WriteCSV(oFile *string, hashAlg *string, resultList []string) error {
 	}
 
 	return nil
+}
+
+// WriteLogfile creates a summary log file after the identification run
+func WriteLogfile(Version string, Build string, SigFile string, hashAlg string, nsrlEnabled bool, entro bool, fileList []string, resultList []string){
+	InfoLogger.Println("friller started")
+	InfoLogger.Println("Platform: " + runtime.GOOS + " on " + runtime.GOARCH)
+	InfoLogger.Println("Friller Version: " + Version)
+	InfoLogger.Println("Friller Build: " + Build)
+	InfoLogger.Println("Siegfried signature file: " + SigFile)
+	InfoLogger.Println("Hash algorithm used: " + hashAlg)
+	InfoLogger.Println("NSRL lookup enabled: " + strconv.FormatBool(nsrlEnabled))
+	InfoLogger.Println("Entropy calculation enabled: " + strconv.FormatBool(entro))
+	InfoLogger.Println("Inspecting " + strconv.Itoa(len(fileList)) + " files")
+	InfoLogger.Println("Inspected " + strconv.Itoa(len(resultList)) + " files.")
 }
