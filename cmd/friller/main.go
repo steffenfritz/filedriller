@@ -145,7 +145,7 @@ func main() {
 	fdr.InfoLogger.Println("NSRL lookup enabled: " + strconv.FormatBool(nsrlEnabled))
 	fdr.InfoLogger.Println("Entropy calculation enabled: " + strconv.FormatBool(*entro))
 
-	fileList := fdr.CreateFileList(*rootDir)
+	fileList, dirList := fdr.CreateFileList(*rootDir)
 	log.Println("info: Created file list. Found " + strconv.Itoa(len(fileList)) + " files.")
 	fdr.InfoLogger.Println("Inspecting " + strconv.Itoa(len(fileList)) + " files")
 	log.Println("info: Started file format identification")
@@ -176,6 +176,15 @@ func main() {
 			fdr.ErrorLogger.Println(err)
 			log.Fatal(err)
 		}
+	}
+
+	for _, directoryEntry := range dirList {
+		_, err := fd.WriteString(directoryEntry + "\r\n")
+		if err != nil {
+			fdr.ErrorLogger.Println(err)
+			log.Fatal(err)
+		}
+
 	}
 
 	log.Println("info: Output written to " + *oFile)
