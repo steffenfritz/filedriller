@@ -20,7 +20,7 @@ func BenchmarkCreateFileList(b *testing.B) {
 	}
 	for _, tt := range tests {
 		b.Run(tt.name, func(b *testing.B) {
-			if got := CreateFileList(tt.args.rootDir); !reflect.DeepEqual(got, tt.want) {
+			if got, _ := CreateFileList(tt.args.rootDir); !reflect.DeepEqual(got, tt.want) {
 				b.Errorf("CreateFileList() = %v, want %v", got, tt.want)
 			}
 		})
