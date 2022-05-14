@@ -35,7 +35,7 @@ func CreateFileList(rootDir string) ([]string, []string) {
 }
 
 // IdentifyDirs reads metadata from the filesystem
-func IdentifyFSInfo(entryList []string){
+func IdentifyFSInfo(entryList []string) {
 	for _, entry := range entryList {
 		fdinfo, err := os.Stat(entry)
 		if err != nil {
@@ -121,7 +121,6 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 
 	return resultList
 }
-
 
 // IdentifyFilesGUI creates metadata with siegfried and hashsum
 // ToDo: This is not the best solution as a lot of code is duplicated.
