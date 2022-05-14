@@ -9,6 +9,7 @@
 # Test binary, built with `go test -c`
 *.test
 /cmd/friller/friller*
+/cmd/griller/griller*
 /cmd/friller/info.txt
 /cmd/friller/info.csv
 .idea/

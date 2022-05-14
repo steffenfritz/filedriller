@@ -1,9 +1,10 @@
 package filedriller
 
 import (
-	"github.com/gomodule/redigo/redis"
 	"reflect"
 	"testing"
+
+	"github.com/gomodule/redigo/redis"
 )
 
 func TestCreateFileList(t *testing.T) {
@@ -19,7 +20,7 @@ func TestCreateFileList(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := CreateFileList(tt.args.rootDir); !reflect.DeepEqual(got, tt.want) {
+			if got, _ := CreateFileList(tt.args.rootDir); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("CreateFileList() = %v, want %v", got, tt.want)
 			}
 		})
