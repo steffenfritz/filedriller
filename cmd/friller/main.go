@@ -56,6 +56,7 @@ func main() {
 	iFile := flag.StringP("file", "f", "", "Inspect single file")
 	entro := flag.BoolP("entropy", "e", false, "Calculate the entropy of files. Limited to file sizes up to 1GB")
 	vers := flag.BoolP("version", "v", false, "Print version and build info")
+	comment := flag.StringP("comment", "c", "", "Add a comment to logs.txt")
 
 	flag.Parse()
 
@@ -140,7 +141,9 @@ func main() {
 	fdr.InfoLogger.Println("Friller Version: " + Version)
 	fdr.InfoLogger.Println("Friller Build: " + Build)
 	fdr.InfoLogger.Println("Siegfried signature file: " + SigFile)
+	fdr.InfoLogger.Println("Input path: " + *rootDir)
 	fdr.InfoLogger.Println("Hash algorithm used: " + *hashAlg)
+	fdr.InfoLogger.Println("Comment: " + *comment)
 
 	fdr.InfoLogger.Println("NSRL lookup enabled: " + strconv.FormatBool(nsrlEnabled))
 	fdr.InfoLogger.Println("Entropy calculation enabled: " + strconv.FormatBool(*entro))
@@ -164,12 +167,16 @@ func main() {
 
 	log.Println("info: Writing output to " + *oFile)
 
-	_, err = fd.WriteString("Filename, SizeInByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, " + strings.ToUpper(*hashAlg) + ", UUID, inNSRL, Entropy\r\n")
+	_, err = fd.WriteString("Filename, SizeInByte, Registry, " +
+		"RegistryIdentifier, Name, Version, MIME, ByteMatch, IdentificationNote, " +
+		strings.ToUpper(*hashAlg) + ", UUID, inNSRL, Entropy\r\n")
 
 	if err != nil {
 		fdr.ErrorLogger.Println(err)
 		log.Fatal(err)
 	}
+
+	// Write all result strings to output file
 	for _, result := range resultList {
 		_, err := fd.WriteString(result + "\r\n")
 		if err != nil {
@@ -178,8 +185,9 @@ func main() {
 		}
 	}
 
+	// Write all directory names to output file
 	for _, directoryEntry := range dirList {
-		_, err := fd.WriteString(directoryEntry + "\r\n")
+		_, err := fd.WriteString(directoryEntry + ",,gnuFindType,d,,,,,,," + fdr.CreateUUID() + ",,\r\n")
 		if err != nil {
 			fdr.ErrorLogger.Println(err)
 			log.Fatal(err)

@@ -22,7 +22,7 @@ build_all:
 	rm friller
 	mv friller-linux friller && tar cvfz friller_linux_$(VERSION).tar.gz friller
 	rm friller
-	mv friller-windows friller && tar cvfz friller_win_$(VERSION).tar.gz friller
+	mv friller-windows friller.exe && tar cvfz friller_win_$(VERSION).tar.gz friller.exe
 	rm friller
 
 
