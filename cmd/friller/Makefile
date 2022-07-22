@@ -2,7 +2,7 @@ ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 BINARY=friller
 VERSION=1.0.0-BETA-7
-SigFile=pronom:DROID_SignatureFile_V100.xml;container-signature-20211216.xml
+SigFile=pronom:DROID_SignatureFile_V106.xml;container-signature-20220704.xmll
 BUILD=`git rev-parse --short HEAD`
 PLATFORMS=darwin linux windows
 ARCHITECTURES=amd64
@@ -23,7 +23,7 @@ build_all:
 	mv friller-linux friller && tar cvfz friller_linux_$(VERSION).tar.gz friller
 	rm friller
 	mv friller-windows friller.exe && tar cvfz friller_win_$(VERSION).tar.gz friller.exe
-	rm friller
+	rm friller.exe
 
 
 clean:
