@@ -167,7 +167,7 @@ func main() {
 
 	log.Println("info: Writing output to " + *oFile)
 
-	_, err = fd.WriteString("Filename, SizeInByte, Owner, Registry, " +
+	_, err = fd.WriteString("Filename, SizeInByte, Registry, " +
 		"RegistryIdentifier, Name, Version, MIME, ByteMatch, IdentificationNote, " +
 		strings.ToUpper(*hashAlg) + ", UUID, inNSRL, Entropy\r\n")
 
