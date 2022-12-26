@@ -12,7 +12,6 @@ FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
-
 */
 package main
 
@@ -187,7 +186,7 @@ func main() {
 
 	// Write all directory names to output file
 	for _, directoryEntry := range dirList {
-		_, err := fd.WriteString(directoryEntry + ",,gnuFindType,d,,,,,,," + fdr.CreateUUID() + ",,\r\n")
+		_, err := fd.WriteString("\"" + directoryEntry + "\"" + ",,gnuFindType,d,,,,,,," + fdr.CreateUUID() + ",,\r\n")
 		if err != nil {
 			fdr.ErrorLogger.Println(err)
 			log.Fatal(err)

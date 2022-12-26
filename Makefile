@@ -1,5 +1,5 @@
 all:
-		go build
+		go build -ldflags "-w -s"
 test:
 		go test -v
 		rm pronom.sig

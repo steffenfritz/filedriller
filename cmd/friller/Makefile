@@ -1,7 +1,7 @@
 ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 BINARY=friller
-VERSION=1.0.0-BETA-7
+VERSION=1.0.0-BETA-8
 SigFile=pronom:DROID_SignatureFile_V106.xml;container-signature-20220704.xmll
 BUILD=`git rev-parse --short HEAD`
 PLATFORMS=darwin linux windows
