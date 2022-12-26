@@ -2,6 +2,7 @@ package filedriller
 
 import (
 	"encoding/hex"
+	"io/fs"
 	"log"
 	"os"
 	"path/filepath"
@@ -17,7 +18,7 @@ import (
 func CreateFileList(rootDir string) ([]string, []string) {
 	var fileList []string
 	var dirList []string
-	err := filepath.Walk(rootDir, func(path string, info os.FileInfo, err error) error {
+	err := filepath.WalkDir(rootDir, func(path string, info fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
