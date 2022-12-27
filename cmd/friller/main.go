@@ -166,9 +166,11 @@ func main() {
 
 	log.Println("info: Writing output to " + *oFile)
 
+	// Write CSV field names
 	_, err = fd.WriteString("Filename, SizeInByte, Registry, " +
 		"RegistryIdentifier, Name, Version, MIME, ByteMatch, IdentificationNote, " +
-		strings.ToUpper(*hashAlg) + ", UUID, inNSRL, Entropy\r\n")
+		strings.ToUpper(*hashAlg) + ", UUID, AccessTime, ModTime, ChangeTime, " +
+		"BirthTime, inNSRL, Entropy\r\n")
 
 	if err != nil {
 		fdr.ErrorLogger.Println(err)

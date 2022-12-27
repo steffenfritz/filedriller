@@ -2,6 +2,7 @@ package filedriller
 
 import (
 	"encoding/hex"
+	"github.com/djherbis/times"
 	"io/fs"
 	"log"
 	"os"
@@ -84,6 +85,27 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 
 		onefilehash := hex.EncodeToString(Hashit(filePath, hashDigest))
 		oneFile := oneFileResult + ",\"" + onefilehash + "\",\"" + CreateUUID() + "\","
+
+		// get atime,mtime and ctime from files
+		t, err := times.Stat(filePath)
+		if err != nil {
+			ErrorLogger.Println(oneFileResult)
+		}
+
+		oneFile = oneFile + t.AccessTime().String() + ","
+		oneFile = oneFile + t.ModTime().String() + ","
+
+		if t.HasChangeTime() {
+			oneFile = oneFile + t.ChangeTime().String() + ","
+		} else {
+			oneFile = oneFile + ","
+		}
+
+		if t.HasBirthTime() {
+			oneFile = oneFile + t.BirthTime().String() + ","
+		} else {
+			oneFile = oneFile + ","
+		}
 
 		// we need a sha1 for redis. if sha1 is not used in this run we
 		// need to calculate sha1 for redis if nsrl is enabled
