@@ -17,7 +17,7 @@ For issues see the issue tab.
 
 1. Binary release
     
-    Download the file for your platform and execute it. The executables are named friller.
+    Download the file for your platform and execute it on the command line. The executables are named friller.
     
     _Note: If the build badge above is green and says passing, it is a good idea to install from source._
     
