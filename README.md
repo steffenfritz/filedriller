@@ -36,7 +36,7 @@ then
 
 4. _Optional NSRL_:
 
-        - docker pull ampoffcom/nslredis:032020
+        - docker pull ampoffcom/nslredis:122022
 
         - docker images
 
