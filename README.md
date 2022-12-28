@@ -25,7 +25,7 @@ or
 
 2. From source
 
-        go get github.com/dla-marbach/filedriller/cmd/friller
+        go get github.com/steffenfritz/filedriller/cmd/friller
 
 then
 
