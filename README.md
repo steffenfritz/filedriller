@@ -69,7 +69,8 @@ asciinema recording: https://asciinema.org/a/ZPAW3ovkYNR4flK5C5wmi2GAA
 
 The output is written to a CSV file. Schema of the file:
 
-    Filename, SizeInByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, Hash Name, UUID, inNSRL, Entropy
+    Filename, SizeInByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, 
+    Hash Name, UUID, AccessTime, ModTime, ChangeTime, BirthTime inNSRL, Entropy
 
 ## Flags
 
