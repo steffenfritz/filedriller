@@ -17,7 +17,7 @@ For issues see the issue tab.
 
 1. Binary release
     
-    Download the file for your platform and execute it. The executables are named friller.
+    Download the file for your platform and execute it on the command line. The executables are named friller.
     
     _Note: If the build badge above is green and says passing, it is a good idea to install from source._
     
@@ -25,7 +25,7 @@ or
 
 2. From source
 
-        go get github.com/dla-marbach/filedriller/cmd/friller
+        go get github.com/steffenfritz/filedriller/cmd/friller
 
 then
 
@@ -36,7 +36,7 @@ then
 
 4. _Optional NSRL_:
 
-        - docker pull ampoffcom/nslredis:032020
+        - docker pull ampoffcom/nslredis:122022
 
         - docker images
 
@@ -69,7 +69,8 @@ asciinema recording: https://asciinema.org/a/ZPAW3ovkYNR4flK5C5wmi2GAA
 
 The output is written to a CSV file. Schema of the file:
 
-    Filename, SizeInByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, Hash Name, UUID, inNSRL, Entropy
+    Filename, SizeInByte, Registry, PUID, Name, Version, MIME, ByteMatch, IdentificationNote, 
+    Hash Name, UUID, AccessTime, ModTime, ChangeTime, BirthTime inNSRL, Entropy
 
 ## Flags
 
