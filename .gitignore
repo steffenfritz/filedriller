@@ -17,6 +17,7 @@ cmd/friller/pronom.sig
 pronom.sig
 errorlogs.txt
 logs.txt
+/testdata/rootfile
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out

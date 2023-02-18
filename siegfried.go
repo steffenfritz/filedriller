@@ -20,7 +20,8 @@ func siegfriedIdent(s *siegfried.Siegfried, inFile string) (bool, string) {
 
 	fi, _ := f.Stat()
 	if fi.Size() == 0 {
-		return resultBool, "\"" + inFile + "\",,,,,,,,"
+		//return resultBool, "\"" + inFile + "\",0,,,,,,,"
+		return true, "\"" + inFile + "\",0,,,,,,,"
 	}
 
 	ids, err := s.Identify(f, "", "")

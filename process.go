@@ -81,6 +81,7 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 		successful, oneFileResult := siegfriedIdent(s, filePath)
 		if !successful {
 			ErrorLogger.Println(oneFileResult)
+			continue
 		}
 
 		onefilehash := hex.EncodeToString(Hashit(filePath, hashDigest))
@@ -141,74 +142,6 @@ func IdentifyFiles(fileList []string, hashDigest string, nsrlEnabled bool, conn 
 	}
 
 	bar.Finish()
-
-	return resultList
-}
-
-// IdentifyFilesGUI creates metadata with siegfried and hashsum
-// ToDo: This is not the best solution as a lot of code is duplicated.
-// IdentifyFiles() should be refactored and split
-func IdentifyFilesGUI(fileList []string, nsrlEnabled bool, conf Config, progress *float64) []string {
-	var resultList []string
-
-	s, err := siegfried.Load("/Users/steffen/pronom.sig")
-	if err != nil {
-		e(err)
-	}
-
-	var conn redis.Conn
-	if conf.RedisServer != "" {
-		nsrlEnabled = true
-		r := RedisConf{Server: &conf.RedisServer, Port: &conf.RedisPort}
-		conn = RedisConnect(r)
-	}
-
-	var calcNSRL bool
-	if conf.HashAlg != "sha1" {
-		calcNSRL = true
-	}
-
-	var entroFile float64
-
-	for _, filePath := range fileList {
-		successful, oneFileResult := siegfriedIdent(s, filePath)
-		if !successful {
-			ErrorLogger.Println(oneFileResult)
-		}
-
-		onefilehash := hex.EncodeToString(Hashit(filePath, conf.HashAlg))
-		oneFile := oneFileResult + ",\"" + onefilehash + "\",\"" + CreateUUID() + "\","
-
-		// we need a sha1 for redis. if sha1 is not used in this run we
-		// need to calculate sha1 for redis if nsrl is enabled
-		if nsrlEnabled {
-			var nsrlHash string
-			if calcNSRL {
-				nsrlHash = hex.EncodeToString(Hashit(filePath, "sha1"))
-			} else {
-				nsrlHash = onefilehash
-			}
-
-			inNSRL := RedisGet(conn, strings.ToUpper(nsrlHash))
-			oneFile = oneFile + inNSRL
-		}
-
-		if conf.Entro {
-			entroFile, err = entropy(filePath)
-			if err == nil {
-				oneFile = oneFile + ",\"" + strconv.FormatFloat(entroFile, 'E', -1, 32) + "\""
-			} else {
-				oneFile = oneFile + ",\"" + "ERROR calculating entropy" + "\""
-			}
-		} else {
-			oneFile = oneFile + ","
-
-		}
-
-		*progress += 1.0
-		resultList = append(resultList, oneFile)
-
-	}
 
 	return resultList
 }
