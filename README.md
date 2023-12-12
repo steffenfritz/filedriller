@@ -7,6 +7,8 @@ filedriller walks a directory tree and identifies all regular files by type with
 
 The NSRL check expects a Redis server that serves NSRL SHA-1 hashes. You can use [my docker image](https://hub.docker.com/r/ampoffcom/nslredis)
 
+iPres paper 2021: [University of Vienna](https://phaidra.univie.ac.at/detail/o:1424904) 
+
 ## Status 
 
 v1.0-BETA
